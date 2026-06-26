@@ -32,6 +32,10 @@ renders/*
 *.jpeg
 *.png
 *.webp
+!media/backgrounds/*.jpg
+!media/backgrounds/*.jpeg
+!media/backgrounds/*.png
+!media/backgrounds/*.webp
 *.zip
 *.sqlite
 *.sqlite3

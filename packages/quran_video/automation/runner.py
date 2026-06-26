@@ -401,6 +401,10 @@ def _reciter_preference_score(
 
 
 def _select_background(settings) -> Path:
+    backgrounds = list_backgrounds()
+    if backgrounds:
+        selected = secrets.SystemRandom().choice(backgrounds)
+        return settings.backgrounds_dir / selected.id
     if os.getenv("GITHUB_ACTIONS") == "true":
         repository = os.getenv("GITHUB_REPOSITORY")
         if not repository:
@@ -410,11 +414,7 @@ def _select_background(settings) -> Path:
             settings.backgrounds_dir,
             settings.cache_dir / "background-release-download",
         )
-    backgrounds = list_backgrounds()
-    if not backgrounds:
-        raise RuntimeError("no local or release-selected background is available")
-    selected = secrets.SystemRandom().choice(backgrounds)
-    return settings.backgrounds_dir / selected.id
+    raise RuntimeError("no local or release-selected background is available")
 
 
 def _configure_logging() -> None:
