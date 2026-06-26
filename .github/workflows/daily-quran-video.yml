@@ -1,6 +1,11 @@
 name: 18-Hour Quran Video
 
 on:
+  push:
+    branches:
+      - master
+    paths:
+      - .github/workflows/daily-quran-video.yml
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
