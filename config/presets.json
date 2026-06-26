@@ -1,0 +1,25 @@
+{
+  "classic_centered_bilingual": {
+    "resolution": [1920, 1080],
+    "fps": 30,
+    "safe_margin_x": 150,
+    "arabic_center_y": 575,
+    "gloss_spacing": 28,
+    "translation_spacing": 24,
+    "arabic_font_size": 68,
+    "gloss_font_size": 38,
+    "translation_font_size": 35,
+    "arabic_min_size": 52,
+    "gloss_min_size": 30,
+    "translation_min_size": 28,
+    "arabic_line_spacing": 1.25,
+    "english_line_spacing": 1.2,
+    "arabic_max_lines": 3,
+    "gloss_max_lines": 2,
+    "translation_max_lines": 3,
+    "outline_px": 0,
+    "shadow_px": 0,
+    "text_primary": "#FFFFFF",
+    "text_secondary": "#FFFFFF"
+  }
+}

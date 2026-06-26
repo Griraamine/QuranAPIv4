@@ -1,0 +1,106 @@
+services:
+  redis:
+    image: redis:8.4-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      API_ORIGIN: http://127.0.0.1:8000
+      WEB_ORIGIN: http://127.0.0.1:3000
+      REDIS_URL: redis://redis:6379/0
+      SQLITE_PATH: /app/data/cache/jobs.sqlite3
+      QURAN_VIDEO_DATA_MODE: ${QURAN_VIDEO_DATA_MODE:-fixture}
+      QF_CLIENT_ID: ${QF_CLIENT_ID:-}
+      QF_CLIENT_SECRET: ${QF_CLIENT_SECRET:-}
+      QF_ENV: ${QF_ENV:-production}
+      QF_AUTH_BASE: ${QF_AUTH_BASE:-}
+      QF_API_BASE: ${QF_API_BASE:-}
+      QF_CONNECT_TIMEOUT: ${QF_CONNECT_TIMEOUT:-10}
+      QF_READ_TIMEOUT: ${QF_READ_TIMEOUT:-30}
+      QF_RETRIES: ${QF_RETRIES:-3}
+      QF_TOKEN_REFRESH_MARGIN_SECONDS: ${QF_TOKEN_REFRESH_MARGIN_SECONDS:-60}
+      QF_MAX_TIMING_OVERFLOW_MS: ${QF_MAX_TIMING_OVERFLOW_MS:-2000}
+      QF_MIN_TIMING_COVERAGE: ${QF_MIN_TIMING_COVERAGE:-0.90}
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./config:/app/config
+      - ./data/cache:/app/data/cache
+      - ./media/backgrounds:/app/media/backgrounds
+      - ./renders:/app/renders
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      SQLITE_PATH: /app/data/cache/jobs.sqlite3
+      QURAN_VIDEO_DATA_MODE: ${QURAN_VIDEO_DATA_MODE:-fixture}
+      QF_CLIENT_ID: ${QF_CLIENT_ID:-}
+      QF_CLIENT_SECRET: ${QF_CLIENT_SECRET:-}
+      QF_ENV: ${QF_ENV:-production}
+      QF_AUTH_BASE: ${QF_AUTH_BASE:-}
+      QF_API_BASE: ${QF_API_BASE:-}
+      QF_CONNECT_TIMEOUT: ${QF_CONNECT_TIMEOUT:-10}
+      QF_READ_TIMEOUT: ${QF_READ_TIMEOUT:-30}
+      QF_RETRIES: ${QF_RETRIES:-3}
+      QF_TOKEN_REFRESH_MARGIN_SECONDS: ${QF_TOKEN_REFRESH_MARGIN_SECONDS:-60}
+      QF_MAX_TIMING_OVERFLOW_MS: ${QF_MAX_TIMING_OVERFLOW_MS:-2000}
+      QF_MIN_TIMING_COVERAGE: ${QF_MIN_TIMING_COVERAGE:-0.90}
+    volumes:
+      - ./config:/app/config
+      - ./data/cache:/app/data/cache
+      - ./media/backgrounds:/app/media/backgrounds
+      - ./renders:/app/renders
+    depends_on:
+      redis:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+
+  web:
+    image: node:24.17.0-alpine
+    working_dir: /app/apps/web
+    environment:
+      API_PROXY_TARGET: http://api:8000
+    command: >
+      sh -c '
+        LOCK_HASH="$$(sha256sum package-lock.json | cut -d" " -f1)";
+        if [ ! -f node_modules/.package-lock.sha256 ] || [ "$$(cat node_modules/.package-lock.sha256)" != "$$LOCK_HASH" ]; then
+          npm ci &&
+          npm install --no-save @rolldown/binding-linux-x64-musl@1.0.3 &&
+          echo "$$LOCK_HASH" > node_modules/.package-lock.sha256;
+        fi;
+        npm run dev -- --host 0.0.0.0 --port 3000
+      '
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - .:/app
+      - web-node-modules:/app/apps/web/node_modules
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  redis-data:
+  web-node-modules:

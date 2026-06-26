@@ -1,0 +1,616 @@
+@font-face {
+  font-family: "SurahNameV4";
+  src: url("/fonts/surah-name-v4.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Amiri Quran";
+  src: url("/fonts/AmiriQuran.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Amiri";
+  src: url("/fonts/Amiri-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("/fonts/OpenSans.ttf") format("truetype");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #151716;
+  color: #f6f4ed;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+select,
+input {
+  border: 1px solid #454943;
+  border-radius: 6px;
+  background: #222522;
+  color: #f8f7f0;
+}
+
+button {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: 38px;
+  padding: 7px 10px;
+}
+
+input[type="range"] {
+  padding: 0;
+}
+
+input[type="color"] {
+  padding: 3px;
+}
+
+.shell {
+  min-height: 100vh;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 28px;
+  border-bottom: 1px solid #30342f;
+  background: #1d201e;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.topbar p {
+  margin: 4px 0 0;
+  color: #c8c6bd;
+}
+
+.doctor,
+.status-line,
+.progress-row,
+.downloads {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.doctor {
+  color: #d6dcc6;
+}
+
+.alert {
+  margin: 14px 28px;
+  padding: 10px 12px;
+  border: 1px solid #7b4d4d;
+  border-radius: 6px;
+  color: #ffe2df;
+  background: #352222;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: 210px minmax(360px, 0.9fr) minmax(460px, 1fr);
+  min-height: calc(100vh - 78px);
+}
+
+.steps {
+  padding: 18px 12px;
+  border-right: 1px solid #30342f;
+  background: #191c1a;
+}
+
+.page-tab {
+  width: 100%;
+  min-height: 70px;
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  grid-template-rows: auto auto;
+  align-items: center;
+  justify-content: stretch;
+  gap: 2px 10px;
+  margin-bottom: 8px;
+  padding: 10px;
+  color: #a9aaa6;
+  text-align: left;
+  background: transparent;
+}
+
+.page-tab span {
+  grid-row: 1 / 3;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #454943;
+  border-radius: 50%;
+}
+
+.page-tab strong {
+  font-size: 14px;
+}
+
+.page-tab small {
+  color: #8f918c;
+}
+
+.page-tab.selected {
+  color: #f6f4ed;
+  background: #242821;
+  border-color: #66735e;
+}
+
+.page-tab.selected span {
+  background: #5d6c5b;
+  border-color: #91a08b;
+}
+
+.controls,
+.preview-pane {
+  padding: 18px;
+  overflow: auto;
+}
+
+.controls {
+  border-right: 1px solid #30342f;
+}
+
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #30342f;
+}
+
+.page-head h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.page-head p {
+  margin: 4px 0 0;
+  color: #bfc2b9;
+}
+
+.page-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.control-band {
+  padding: 16px 0;
+  border-bottom: 1px solid #30342f;
+}
+
+.band-title {
+  margin-bottom: 10px;
+  color: #f6f4ed;
+  font-weight: 700;
+}
+
+.control-band > label,
+.control-grid label {
+  display: grid;
+  gap: 7px;
+  color: #d8d5cc;
+  font-size: 14px;
+}
+
+.control-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid #30342f;
+}
+
+.font-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 16px 0;
+}
+
+.font-card {
+  min-height: 104px;
+  display: grid;
+  place-items: center;
+  gap: 5px;
+  padding: 12px;
+  background: #252822;
+}
+
+.font-card span {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.font-card strong {
+  color: #d4d2cb;
+}
+
+.font-card.selected {
+  border-color: #9a73ff;
+  background: #2d2446;
+  box-shadow: inset 0 0 0 1px #9a73ff;
+}
+
+.range-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.range-value {
+  color: #f6f4ed;
+}
+
+.search-row {
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  align-items: center;
+  border: 1px solid #454943;
+  border-radius: 6px;
+  background: #222522;
+  padding-left: 8px;
+  margin: 8px 0;
+}
+
+.search-row input {
+  border: 0;
+}
+
+.segmented {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.segmented .selected {
+  background: #5d6c5b;
+}
+
+.upload-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid #454943;
+  border-radius: 6px;
+  background: #273238;
+  cursor: pointer;
+}
+
+.upload-button input {
+  display: none;
+}
+
+.toggle {
+  display: flex !important;
+  grid-template-columns: none !important;
+  align-items: center;
+  gap: 10px !important;
+  margin: 8px 0;
+}
+
+.toggle input {
+  width: auto;
+}
+
+.status-line {
+  padding: 12px 0;
+  color: #e1ddca;
+}
+
+.preview-pane {
+  background: #101211;
+}
+
+.preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid #343832;
+  border-radius: 6px;
+  background: #272d2e;
+}
+
+.render-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  transform-origin: top left;
+}
+
+.preview-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.08), rgba(0,0,0,0.12)),
+    linear-gradient(140deg, #516363, #2f3931 48%, #645e50);
+}
+
+.preview-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.background-dim {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  pointer-events: none;
+}
+
+.badge {
+  position: absolute;
+  color: #fff;
+}
+
+.badge-row {
+  display: flex;
+  align-items: flex-start;
+}
+
+.badge-art {
+  font-family: "SurahNameV4", "Amiri Quran", "Amiri", serif;
+  direction: rtl;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.badge-meta {
+  font-family: "Open Sans", "Noto Sans", "Liberation Sans", sans-serif;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.preview-text-box {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: none;
+  border: 2px dashed rgb(255 255 255 / 55%);
+  background: rgb(0 0 0 / 10%);
+  pointer-events: none;
+}
+
+.preview-fit-text {
+  display: block;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+  overflow-wrap: normal;
+  word-break: normal;
+  white-space: normal;
+  color: #fff;
+}
+
+.inline-ayah-marker {
+  position: relative;
+  display: inline-block;
+  width: 0.92em;
+  height: 0.74em;
+  margin-inline-start: 0.1em;
+  vertical-align: -0.08em;
+  line-height: 1;
+}
+
+.inline-ayah-marker-symbol,
+.inline-ayah-marker-number {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.inline-ayah-marker-symbol {
+  font-family: "Amiri Quran", "Amiri", serif;
+  font-size: 0.9em;
+}
+
+.inline-ayah-marker-number {
+  font-family: "Open Sans", "Noto Sans Arabic", sans-serif;
+  font-size: 0.25em;
+  font-weight: 700;
+  transform: translate(-50%, -38%);
+}
+
+.preview-fit-text-fade {
+  animation: preview-text-fade 4s ease-in-out infinite;
+  animation-duration: max(1600ms, calc(var(--text-fade-duration, 350ms) * 8));
+}
+
+@keyframes preview-text-fade {
+  0% {
+    opacity: 0;
+  }
+
+  18%,
+  72% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.preview-arabic {
+  font-family: "Amiri Quran", "Amiri", serif;
+}
+
+.preview-translation {
+  font-family: "Times New Roman", "Liberation Serif", serif;
+  font-style: italic;
+}
+
+.thumbnail-preview {
+  position: relative;
+  width: min(100%, 520px);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  margin-top: 14px;
+  border: 1px solid #343832;
+  border-radius: 6px;
+  background: #272d2e;
+}
+
+.thumbnail-preview strong,
+.thumbnail-preview span {
+  position: absolute;
+  left: 50%;
+  width: 1120px;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  white-space: nowrap;
+  color: #fff;
+}
+
+.thumbnail-preview strong {
+  font-family: "Amiri Quran", "Amiri", serif;
+  direction: rtl;
+}
+
+.thumbnail-preview span {
+  font-family: "Times New Roman", "Liberation Serif", serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.render-panel {
+  margin-top: 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.primary-action {
+  background: #61745f;
+  border-color: #9bad92;
+}
+
+progress {
+  width: 100%;
+  height: 12px;
+}
+
+.downloads a {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  color: #f7f2da;
+  text-decoration: none;
+  border: 1px solid #454943;
+  border-radius: 6px;
+  background: #26343a;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 980px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    border-right: 0;
+    border-bottom: 1px solid #30342f;
+  }
+
+  .page-tab {
+    margin-bottom: 0;
+  }
+
+  .controls {
+    border-right: 0;
+  }
+
+  .control-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .font-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

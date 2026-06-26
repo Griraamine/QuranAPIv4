@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "24.17.0"
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fontconfig fonts-hosny-amiri fonts-liberation2 libfribidi0 libharfbuzz0b libass9 redis-server unzip
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Install frontend dependencies
+        run: npm ci --prefix apps/web
+      - name: Python checks
+        run: |
+          python -m compileall apps packages worker scripts
+          ruff check .
+          ruff format --check .
+          mypy apps packages worker scripts
+          pytest -q
+      - name: Frontend checks
+        run: |
+          npm run lint --prefix apps/web
+          npm run typecheck --prefix apps/web
+          npm run test --prefix apps/web
+          npm run build --prefix apps/web
+      - name: Workflow and sample render
+        run: |
+          docker compose config
+          python scripts/validate_workflow.py
+          python scripts/doctor.py --ci
+          python scripts/render_sample.py

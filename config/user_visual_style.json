@@ -1,0 +1,52 @@
+{
+  "background_style": {
+    "dim_opacity": 47
+  },
+  "typography": {
+    "arabic_font_size": 86,
+    "gloss_font_size": 40,
+    "translation_font_size": 58,
+    "text_shade": "#FFFFFF",
+    "secondary_shade": "#FFFFFF",
+    "outline_px": 0,
+    "shadow_px": 0,
+    "line_spacing": 1.47,
+    "position": "center",
+    "arabic_y": 442,
+    "gloss_y": 880,
+    "translation_y": 880,
+    "arabic_box_x": 980,
+    "arabic_box_y": 442,
+    "arabic_box_width": 1920,
+    "arabic_box_height": 387,
+    "translation_box_x": 979,
+    "translation_box_y": 880,
+    "translation_box_width": 1746,
+    "translation_box_height": 381,
+    "text_transition": "fade",
+    "fade_duration_ms": 300,
+    "arabic_font_key": "amiri",
+    "english_font_key": "system"
+  },
+  "badge_style": {
+    "x": 50,
+    "y": 57,
+    "artistic_surah_size": 89,
+    "english_size": 38,
+    "range_size": 52,
+    "line_gap": 35,
+    "shade": "#FFFFFF",
+    "secondary_shade": "#FFFFFF",
+    "show_reciter": false
+  },
+  "thumbnail_style": {
+    "artistic_surah_size": 81,
+    "artistic_y": 233,
+    "artistic_shade": "#FFFFFF",
+    "show_english": true,
+    "english_size": 59,
+    "english_y": 411,
+    "english_shade": "#FFFFFF",
+    "shadow_px": 0
+  }
+}
