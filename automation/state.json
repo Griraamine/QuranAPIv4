@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    51,
     25,
     1,
     84,
@@ -119,9 +118,9 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 76,
+    "surah": 51,
     "reciter": "9:name-murattal-translated-name-name-murattal-language-name-english",
-    "video": "https://www.youtube.com/watch?v=XzT5D80k3M8"
+    "video": "https://www.youtube.com/watch?v=YuGTpp9H0x0"
   },
   "recent_failures": []
 }
