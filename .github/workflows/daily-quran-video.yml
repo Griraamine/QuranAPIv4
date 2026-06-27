@@ -48,28 +48,33 @@ jobs:
         run: |
           python - <<'PY'
           import os
-          from datetime import datetime, timezone
+          import subprocess
+          from datetime import datetime, timedelta, timezone
 
           event = os.environ["EVENT_NAME"]
           schedule = os.environ.get("EVENT_SCHEDULE") or None
           if event == "workflow_dispatch":
               run = True
           else:
-              now = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
-              anchor = datetime(2026, 1, 1, tzinfo=timezone.utc)
-              elapsed_hours = int((now - anchor).total_seconds() // 3600)
-              run = (
-                  event == "schedule"
-                  and schedule == "37 * * * *"
-                  and datetime.now(timezone.utc).minute >= 37
-                  and elapsed_hours >= 0
-                  and elapsed_hours % 18 == 0
-              )
+              run = False
+              if event == "schedule" and schedule == "37 * * * *":
+                  now = datetime.now(timezone.utc)
+                  raw = subprocess.run(
+                      ["git", "log", "-1", "--format=%cI", "--", "automation/state.json"],
+                      check=False,
+                      capture_output=True,
+                      text=True,
+                  ).stdout.strip()
+                  if not raw:
+                      run = True
+                  else:
+                      last_success = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+                      run = now - last_success >= timedelta(hours=18)
           print(f"run={str(run).lower()}", file=open(os.environ["GITHUB_OUTPUT"], "a"))
           PY
       - name: Stop skipped schedule
         if: steps.gate.outputs.run != 'true'
-        run: echo "Not an 18-hour automation slot."
+        run: echo "Last successful automation state update is less than 18 hours old."
       - name: Install system dependencies
         if: steps.gate.outputs.run == 'true'
         run: |

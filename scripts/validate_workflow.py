@@ -24,17 +24,12 @@ def main() -> int:
     if not should_run_for_schedule(
         "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 0, 37, tzinfo=UTC)
     ):
-        print("first 18-hour slot failed", file=sys.stderr)
+        print("scheduled workflow gate failed", file=sys.stderr)
         return 1
     if should_run_for_schedule(
-        "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 6, 37, tzinfo=UTC)
+        "schedule", "0 * * * *", datetime(2026, 1, 1, 6, 37, tzinfo=UTC)
     ):
-        print("six-hour skip gate failed", file=sys.stderr)
-        return 1
-    if not should_run_for_schedule(
-        "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 18, 37, tzinfo=UTC)
-    ):
-        print("second 18-hour slot failed", file=sys.stderr)
+        print("unexpected schedule accepted", file=sys.stderr)
         return 1
     print("workflow validation passed")
     return 0

@@ -3,9 +3,7 @@ from __future__ import annotations
 from datetime import UTC, date, datetime, time
 
 AUTOMATION_SCHEDULE_CRON = "37 * * * *"
-AUTOMATION_SCHEDULE_MINUTE = 37
 AUTOMATION_INTERVAL_HOURS = 18
-AUTOMATION_ANCHOR_UTC = datetime(2026, 1, 1, tzinfo=UTC)
 
 
 def expected_utc_cron_for_berlin_5am(day: date) -> str:
@@ -24,13 +22,7 @@ def should_run_for_schedule(
         return True
     if event_name != "schedule" or schedule is None:
         return False
-    if schedule != AUTOMATION_SCHEDULE_CRON:
-        return False
-    run_at = _as_utc_hour(scheduled_at)
-    if run_at.minute != AUTOMATION_SCHEDULE_MINUTE:
-        return False
-    elapsed_hours = int((run_at - AUTOMATION_ANCHOR_UTC).total_seconds() // 3600)
-    return elapsed_hours >= 0 and elapsed_hours % AUTOMATION_INTERVAL_HOURS == 0
+    return schedule == AUTOMATION_SCHEDULE_CRON
 
 
 def _as_utc_hour(value: date | datetime) -> datetime:

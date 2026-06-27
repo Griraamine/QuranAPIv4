@@ -32,7 +32,7 @@ def test_surah_queue_no_repeat_and_schedule_gating(tmp_path: Path) -> None:
         "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 18, 37, tzinfo=UTC)
     )
     assert not should_run_for_schedule(
-        "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 6, 37, tzinfo=UTC)
+        "schedule", "0 * * * *", datetime(2026, 1, 1, 6, 37, tzinfo=UTC)
     )
 
 
