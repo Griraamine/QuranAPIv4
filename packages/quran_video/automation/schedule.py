@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from datetime import UTC, date, datetime, time
 
-AUTOMATION_SCHEDULE_CRON = "17 * * * *"
-AUTOMATION_SCHEDULE_MINUTE = 17
+AUTOMATION_SCHEDULE_CRON = "37 * * * *"
+AUTOMATION_SCHEDULE_MINUTE = 37
 AUTOMATION_INTERVAL_HOURS = 18
 AUTOMATION_ANCHOR_UTC = datetime(2026, 1, 1, tzinfo=UTC)
 

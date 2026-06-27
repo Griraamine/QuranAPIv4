@@ -26,13 +26,13 @@ def test_surah_queue_no_repeat_and_schedule_gating(tmp_path: Path) -> None:
     save_state(tmp_path / "state.json", next_state)
     assert load_state(tmp_path / "state.json").surah_queue == [5, 6]
     assert should_run_for_schedule(
-        "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 0, 17, tzinfo=UTC)
+        "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 0, 37, tzinfo=UTC)
     )
     assert should_run_for_schedule(
-        "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 18, 17, tzinfo=UTC)
+        "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 18, 37, tzinfo=UTC)
     )
     assert not should_run_for_schedule(
-        "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 6, 17, tzinfo=UTC)
+        "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 6, 37, tzinfo=UTC)
     )
 
 
