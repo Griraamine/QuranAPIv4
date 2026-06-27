@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from datetime import UTC, date, datetime, time
 
-AUTOMATION_SCHEDULE_CRON = "0 */6 * * *"
+AUTOMATION_SCHEDULE_CRON = "17 * * * *"
+AUTOMATION_SCHEDULE_MINUTE = 17
 AUTOMATION_INTERVAL_HOURS = 18
 AUTOMATION_ANCHOR_UTC = datetime(2026, 1, 1, tzinfo=UTC)
 
@@ -26,7 +27,7 @@ def should_run_for_schedule(
     if schedule != AUTOMATION_SCHEDULE_CRON:
         return False
     run_at = _as_utc_hour(scheduled_at)
-    if run_at.minute != 0 or run_at.hour % 6 != 0:
+    if run_at.minute != AUTOMATION_SCHEDULE_MINUTE:
         return False
     elapsed_hours = int((run_at - AUTOMATION_ANCHOR_UTC).total_seconds() // 3600)
     return elapsed_hours >= 0 and elapsed_hours % AUTOMATION_INTERVAL_HOURS == 0

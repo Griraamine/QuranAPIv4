@@ -7,7 +7,7 @@ on:
     paths:
       - .github/workflows/daily-quran-video.yml
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '17 * * * *'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -60,8 +60,8 @@ jobs:
               elapsed_hours = int((now - anchor).total_seconds() // 3600)
               run = (
                   event == "schedule"
-                  and schedule == "0 */6 * * *"
-                  and now.hour % 6 == 0
+                  and schedule == "17 * * * *"
+                  and datetime.now(timezone.utc).minute >= 17
                   and elapsed_hours >= 0
                   and elapsed_hours % 18 == 0
               )

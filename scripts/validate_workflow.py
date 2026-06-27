@@ -22,17 +22,17 @@ def main() -> int:
         print(f"unexpected schedule entries: {schedules}", file=sys.stderr)
         return 1
     if not should_run_for_schedule(
-        "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, tzinfo=UTC)
+        "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 0, 17, tzinfo=UTC)
     ):
         print("first 18-hour slot failed", file=sys.stderr)
         return 1
     if should_run_for_schedule(
-        "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 6, tzinfo=UTC)
+        "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 6, 17, tzinfo=UTC)
     ):
         print("six-hour skip gate failed", file=sys.stderr)
         return 1
     if not should_run_for_schedule(
-        "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 18, tzinfo=UTC)
+        "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 18, 17, tzinfo=UTC)
     ):
         print("second 18-hour slot failed", file=sys.stderr)
         return 1
