@@ -305,7 +305,7 @@ class BadgeStyleSettings(BaseModel):
 
 
 class ThumbnailStyleSettings(BaseModel):
-    artistic_surah_size: int = Field(default=90, ge=12, le=220)
+    artistic_surah_size: int = Field(default=105, ge=12, le=220)
     artistic_y: int = Field(default=285, ge=0, le=720)
     artistic_shade: str = "#FFFFFF"
     show_english: bool = True
