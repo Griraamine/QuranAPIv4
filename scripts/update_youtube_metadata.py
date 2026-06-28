@@ -73,6 +73,14 @@ def _reciter_keys(reciter: ChapterReciter) -> set[str]:
     return {_norm(value) for value in variants if value}
 
 
+def _best_scored_reciter(matches: list[tuple[int, ChapterReciter]]) -> ChapterReciter | None:
+    if not matches:
+        return None
+    best_score = max(score for score, _ in matches)
+    best = [reciter for score, reciter in matches if score == best_score]
+    return best[0] if len(best) == 1 else None
+
+
 def _find_chapter(text: str, chapters: list[Chapter]) -> Chapter | None:
     values = [
         _line_value(text, "السورة | Surah"),
@@ -95,21 +103,32 @@ def _find_reciter(text: str, reciters: list[ChapterReciter]) -> ChapterReciter |
         _line_value(text, "القارئ | Reciter"),
         _line_value(text, "Reciter"),
     ]
-    searchable = _norm("\n".join(value for value in values if value) or text)
-    matches = [
-        reciter
-        for reciter in reciters
+    reciter_line = _norm("\n".join(value for value in values if value))
+    searchable = _norm(text)
+    matches: list[tuple[int, ChapterReciter]] = []
+    for reciter in reciters:
+        exact_names = {_norm(reciter.english_name), _norm(reciter.arabic_name)}
+        keys = _reciter_keys(reciter)
+        score = 0
         if any(
-            key and re.search(rf"(^|\s){re.escape(key)}(\s|$)", searchable)
-            for key in _reciter_keys(reciter)
-        )
-    ]
-    return matches[0] if len(matches) == 1 else None
+            name and re.search(rf"(^|\s){re.escape(name)}(\s|$)", reciter_line)
+            for name in exact_names
+        ):
+            score += 100
+        if any(key and re.search(rf"(^|\s){re.escape(key)}(\s|$)", reciter_line) for key in keys):
+            score += 10
+        if any(key and re.search(rf"(^|\s){re.escape(key)}(\s|$)", searchable) for key in keys):
+            score += 1
+        if score:
+            matches.append((score, reciter))
+    return _best_scored_reciter(matches)
 
 
 def _project_video(snippet: dict[str, Any]) -> bool:
     text = f"{snippet.get('title', '')}\n{snippet.get('description', '')}"
     normalized = _norm(text)
+    if "surah" in normalized and "سورة" in normalized:
+        return True
     markers = [
         "quran foundation content api",
         "saheeh international",

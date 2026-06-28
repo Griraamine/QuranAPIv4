@@ -58,17 +58,32 @@ def pack_tags(candidates: list[str], limit: int = 500) -> list[str]:
 
 
 def generate_title(chapter: Chapter, reciter: ChapterReciter) -> str:
+    short_reciter = _short_english_reciter(reciter.english_name)
     title = (
         f"Surah {chapter.english_name} | {reciter.english_name} | "
         f"Arabic & English Subtitles | سورة {chapter.arabic_name} {reciter.arabic_name}"
     )
     if len(regex.findall(r"\X", title)) <= 100:
         return title
+    bilingual_compact = (
+        f"Surah {chapter.english_name} | {short_reciter} | "
+        f"Arabic & English Subtitles | سورة {chapter.arabic_name} {reciter.arabic_name}"
+    )
+    if len(regex.findall(r"\X", bilingual_compact)) <= 100:
+        return bilingual_compact
     compact = f"Surah {chapter.english_name} | {reciter.english_name} | Arabic & English Subtitles"
     if len(regex.findall(r"\X", compact)) <= 100:
         return compact
     graphemes = regex.findall(r"\X", compact)
     return "".join(graphemes[:100])
+
+
+def _short_english_reciter(name: str) -> str:
+    tokens = [token for token in regex.split(r"\s+", name.strip()) if token]
+    for token in reversed(tokens):
+        if token.casefold().startswith("al"):
+            return token
+    return tokens[-1] if tokens else name
 
 
 def _display_recitation_name(value: Any) -> str:
