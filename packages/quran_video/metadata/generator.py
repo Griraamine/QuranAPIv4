@@ -53,11 +53,11 @@ def _english_variants(name: str) -> list[str]:
     return _dedupe(list(variants))
 
 
-def pack_tags(candidates: list[str], limit: int = 500) -> list[str]:
+def pack_tags(candidates: list[str], limit: int = 450) -> list[str]:
     packed: list[str] = []
     total = 0
     for tag in _dedupe(candidates):
-        next_total = total + len(tag) + (1 if packed else 0)
+        next_total = total + len(tag.encode("utf-8")) + (1 if packed else 0)
         if next_total <= limit:
             packed.append(tag)
             total = next_total
@@ -198,6 +198,11 @@ beautiful Quran recitation / quran tilawat relaxing for daily listening, study, 
         remove_arabic_diacritics(arabic_reciter),
         "Quran",
         "Quran recitation",
+        "Quran recitation for sleep",
+        "peaceful Quran recitation",
+        "beautiful Quran recitation",
+        "quran tilawat relaxing",
+        "relaxing Quran recitation",
         "Holy Quran",
         "القرآن الكريم",
         "تلاوة القرآن",
@@ -208,11 +213,6 @@ beautiful Quran recitation / quran tilawat relaxing for daily listening, study, 
         "Arabic Quran",
         "Arabic and English subtitles",
         "Quran with Arabic and English subtitles",
-        "Quran recitation for sleep",
-        "quran tilawat relaxing",
-        "peaceful Quran recitation",
-        "beautiful Quran recitation",
-        "relaxing Quran recitation",
         "Quran recitation with translation",
         "Quran recitation English subtitles",
         "Quran for reflection",
