@@ -8,6 +8,13 @@ import regex
 from quran_video.models import Chapter, ChapterReciter, YouTubeMetadata
 from quran_video.quran.text import normalize_lookup_text, remove_arabic_diacritics
 
+ARABIC_RECITER_OVERRIDES = {
+    "mahmoud khalil al husary": "الحصري",
+    "mahmoud khalil al hussary": "الحصري",
+    "al husary": "الحصري",
+    "al hussary": "الحصري",
+}
+
 
 def _hashtags(value: str) -> str:
     cleaned = regex.sub(r"[^\p{Letter}\p{Number}]+", "_", value.strip())
@@ -59,15 +66,16 @@ def pack_tags(candidates: list[str], limit: int = 500) -> list[str]:
 
 def generate_title(chapter: Chapter, reciter: ChapterReciter) -> str:
     short_reciter = _short_english_reciter(reciter.english_name)
+    arabic_reciter = _arabic_reciter_name(reciter)
     title = (
         f"Surah {chapter.english_name} | {reciter.english_name} | "
-        f"Arabic & English Subtitles | سورة {chapter.arabic_name} {reciter.arabic_name}"
+        f"Arabic & English Subtitles | سورة {chapter.arabic_name} {arabic_reciter}"
     )
     if len(regex.findall(r"\X", title)) <= 100:
         return title
     bilingual_compact = (
         f"Surah {chapter.english_name} | {short_reciter} | "
-        f"Arabic & English Subtitles | سورة {chapter.arabic_name} {reciter.arabic_name}"
+        f"Arabic & English Subtitles | سورة {chapter.arabic_name} {arabic_reciter}"
     )
     if len(regex.findall(r"\X", bilingual_compact)) <= 100:
         return bilingual_compact
@@ -84,6 +92,13 @@ def _short_english_reciter(name: str) -> str:
         if token.casefold().startswith("al"):
             return token
     return tokens[-1] if tokens else name
+
+
+def _arabic_reciter_name(reciter: ChapterReciter) -> str:
+    if regex.search(r"\p{Script=Arabic}", reciter.arabic_name):
+        return reciter.arabic_name
+    normalized = normalize_lookup_text(reciter.english_name)
+    return ARABIC_RECITER_OVERRIDES.get(normalized, reciter.arabic_name)
 
 
 def _display_recitation_name(value: Any) -> str:
@@ -115,7 +130,7 @@ def generate_metadata(
     english_surah = chapter.english_name
     arabic_surah = chapter.arabic_name
     english_reciter = reciter.english_name
-    arabic_reciter = reciter.arabic_name
+    arabic_reciter = _arabic_reciter_name(reciter)
     selected_moshaf = reciter.moshafs[0] if reciter.moshafs else None
     recitation_name = _display_recitation_name(
         selected_moshaf.name if selected_moshaf else reciter.style.name
