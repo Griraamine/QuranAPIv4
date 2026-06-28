@@ -26,9 +26,7 @@ def main() -> int:
     ):
         print("scheduled workflow gate failed", file=sys.stderr)
         return 1
-    if should_run_for_schedule(
-        "schedule", "0 * * * *", datetime(2026, 1, 1, 6, 37, tzinfo=UTC)
-    ):
+    if should_run_for_schedule("schedule", "0 * * * *", datetime(2026, 1, 1, 6, 37, tzinfo=UTC)):
         print("unexpected schedule accepted", file=sys.stderr)
         return 1
     print("workflow validation passed")
