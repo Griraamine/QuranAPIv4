@@ -561,6 +561,8 @@ def test_metadata_title_and_tags_limits() -> None:
     chapter = Chapter(id=1, arabic_name="الفاتحة", english_name="Al-Fatihah", verse_count=7)
     metadata = generate_metadata(chapter, fixture_reciters()[0], 1, 7)
     assert len(metadata.title) <= 100
+    assert "Arabic & English Subtitles" in metadata.title
+    assert "سورة الفاتحة" in metadata.title
     assert len(",".join(metadata.tags)) <= 500
     assert pack_tags(["Quran", "quran", "Quran recitation"]) == ["Quran", "Quran recitation"]
 
@@ -575,6 +577,8 @@ def test_quran_foundation_metadata_attribution() -> None:
     assert "Quran.Foundation Content API" in metadata.description
     assert "Saheeh International translation" in metadata.description
     assert "Audio recitation source: Quran.Foundation Content API" in metadata.description
+    assert "peaceful Quran recitation" in metadata.description
+    assert "#QuranRecitation" in metadata.description
 
 
 def test_metadata_formats_nested_recitation_name_as_plain_text() -> None:

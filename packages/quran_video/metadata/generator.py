@@ -60,11 +60,11 @@ def pack_tags(candidates: list[str], limit: int = 500) -> list[str]:
 def generate_title(chapter: Chapter, reciter: ChapterReciter) -> str:
     title = (
         f"Surah {chapter.english_name} | {reciter.english_name} | "
-        f"سورة {chapter.arabic_name} | {reciter.arabic_name}"
+        f"Arabic & English Subtitles | سورة {chapter.arabic_name} {reciter.arabic_name}"
     )
     if len(regex.findall(r"\X", title)) <= 100:
         return title
-    compact = f"{chapter.english_name} | {reciter.english_name} | {chapter.arabic_name} | {reciter.arabic_name}"
+    compact = f"Surah {chapter.english_name} | {reciter.english_name} | Arabic & English Subtitles"
     if len(regex.findall(r"\X", compact)) <= 100:
         return compact
     graphemes = regex.findall(r"\X", compact)
@@ -138,6 +138,11 @@ Ayahs {ayah_from}–{ayah_to}
 
 Listen to the Quran with synchronized Arabic text, word-by-word English meanings, and the Saheeh International translation of the meanings.
 
+peaceful Quran recitation with Arabic and English subtitles for reflection, focus, and calm listening.
+beautiful Quran recitation / quran tilawat relaxing for daily listening, study, and sleep.
+
+اللهم اجعل القرآن ربيع قلوبنا ونور صدورنا وذهاب همومنا.
+
 القارئ | Reciter: {arabic_reciter} | {english_reciter}
 الرواية | Recitation/Rewaya: {recitation_name}
 السورة | Surah: {arabic_surah} | {english_surah}
@@ -149,6 +154,7 @@ Listen to the Quran with synchronized Arabic text, word-by-word English meanings
 الخلفية مقدمة من صاحب القناة | Background media provided by the channel owner
 
 #Quran #القرآن_الكريم #{_hashtags(english_surah)} #{_hashtags(arabic_surah)} #{_hashtags(english_reciter)} #{_hashtags(arabic_reciter)}
+#QuranRecitation #PeacefulQuran #BeautifulQuranRecitation #Surah{_hashtags(english_surah)}
 """
     candidates = [
         english_surah,
@@ -170,12 +176,25 @@ Listen to the Quran with synchronized Arabic text, word-by-word English meanings
         "Quran English translation",
         "Quran word by word",
         "Arabic Quran",
+        "Arabic and English subtitles",
+        "Quran with Arabic and English subtitles",
+        "Quran recitation for sleep",
+        "quran tilawat relaxing",
         "peaceful Quran recitation",
         "beautiful Quran recitation",
+        "relaxing Quran recitation",
+        "Quran recitation with translation",
+        "Quran recitation English subtitles",
+        "Quran for reflection",
         f"{english_surah} full",
         f"{english_surah} Quran",
+        f"Surah {english_surah} Arabic English subtitles",
+        f"Surah {english_surah} beautiful recitation",
+        f"Surah {english_surah} peaceful recitation",
         f"{english_reciter} Quran",
         f"{english_reciter} {english_surah}",
+        f"{english_reciter} Quran recitation",
+        f"{english_reciter} Arabic English subtitles",
         f"{arabic_reciter} {arabic_surah}",
     ]
     return YouTubeMetadata(
