@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import ast
+from typing import Any
+
 import regex
 
 from quran_video.models import Chapter, ChapterReciter, YouTubeMetadata
@@ -68,6 +71,26 @@ def generate_title(chapter: Chapter, reciter: ChapterReciter) -> str:
     return "".join(graphemes[:100])
 
 
+def _display_recitation_name(value: Any) -> str:
+    if isinstance(value, dict):
+        translated = value.get("translated_name")
+        if isinstance(translated, dict) and translated.get("name"):
+            return str(translated["name"])
+        if translated:
+            return str(translated)
+        if value.get("name"):
+            return str(value["name"])
+    if isinstance(value, str):
+        cleaned = value.strip()
+        if cleaned.startswith("{") and cleaned.endswith("}"):
+            try:
+                return _display_recitation_name(ast.literal_eval(cleaned))
+            except (SyntaxError, ValueError):
+                pass
+        return cleaned
+    return str(value).strip() if value else ""
+
+
 def generate_metadata(
     chapter: Chapter,
     reciter: ChapterReciter,
@@ -79,7 +102,9 @@ def generate_metadata(
     english_reciter = reciter.english_name
     arabic_reciter = reciter.arabic_name
     selected_moshaf = reciter.moshafs[0] if reciter.moshafs else None
-    recitation_name = selected_moshaf.name if selected_moshaf else reciter.style.name
+    recitation_name = _display_recitation_name(
+        selected_moshaf.name if selected_moshaf else reciter.style.name
+    )
     if reciter.provider == "mp3quran":
         text_source = "Al Quran Cloud / Islamic Network"
         timing_source = "MP3Quran.net"

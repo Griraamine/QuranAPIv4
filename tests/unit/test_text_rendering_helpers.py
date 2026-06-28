@@ -10,7 +10,9 @@ from quran_video.models import (
     BackgroundMode,
     BackgroundStyleSettings,
     Chapter,
+    ChapterReciter,
     QuranWord,
+    RecitationStyle,
     RenderRequest,
     RenderTimeline,
     Verse,
@@ -573,3 +575,23 @@ def test_quran_foundation_metadata_attribution() -> None:
     assert "Quran.Foundation Content API" in metadata.description
     assert "Saheeh International translation" in metadata.description
     assert "Audio recitation source: Quran.Foundation Content API" in metadata.description
+
+
+def test_metadata_formats_nested_recitation_name_as_plain_text() -> None:
+    chapter = Chapter(id=51, arabic_name="الذاريات", english_name="Adh-Dhariyat", verse_count=60)
+    reciter = ChapterReciter(
+        id="9",
+        english_name="Al-Minshawi",
+        arabic_name="المنشاوي",
+        style=RecitationStyle(
+            id="murattal",
+            name="{'name': 'Murattal', 'translated_name': {'name': 'Murattal', 'language_name': 'english'}}",
+        ),
+        provider="quranfoundation",
+    )
+
+    metadata = generate_metadata(chapter, reciter, 1, 60)
+
+    assert "Recitation/Rewaya: Murattal" in metadata.description
+    assert "translated_name" not in metadata.description
+    assert "{'name':" not in metadata.description

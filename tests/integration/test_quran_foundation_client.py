@@ -204,6 +204,49 @@ async def test_api_error_payloads_are_rejected() -> None:
 
 @pytest.mark.asyncio
 @respx.mock
+async def test_chapter_reciters_normalize_nested_style_name() -> None:
+    client = QuranFoundationClient("id", "secret", http_client=httpx.AsyncClient())
+    respx.post("https://oauth2.quran.foundation/oauth2/token").mock(
+        return_value=httpx.Response(200, json={"access_token": "token", "expires_in": 3600})
+    )
+    respx.get("https://apis.quran.foundation/content/api/v4/resources/chapter_reciters").mock(
+        side_effect=[
+            httpx.Response(
+                200,
+                json={
+                    "reciters": [
+                        {
+                            "id": 9,
+                            "reciter_name": "Al-Minshawi",
+                            "style": {
+                                "name": "Murattal",
+                                "translated_name": {
+                                    "name": "Murattal",
+                                    "language_name": "english",
+                                },
+                            },
+                        }
+                    ]
+                },
+            ),
+            httpx.Response(
+                200,
+                json={"reciters": [{"id": 9, "reciter_name": "المنشاوي"}]},
+            ),
+        ]
+    )
+
+    reciters = await client.get_chapter_reciters()
+
+    assert reciters[0].english_name == "Al-Minshawi"
+    assert reciters[0].arabic_name == "المنشاوي"
+    assert reciters[0].style.name == "Murattal"
+    assert reciters[0].style.id == "murattal"
+    await client.close()
+
+
+@pytest.mark.asyncio
+@respx.mock
 async def test_chapter_audio_parses_word_segments_and_uses_segments_parameter() -> None:
     client = QuranFoundationClient("id", "secret", http_client=httpx.AsyncClient())
     respx.post("https://oauth2.quran.foundation/oauth2/token").mock(

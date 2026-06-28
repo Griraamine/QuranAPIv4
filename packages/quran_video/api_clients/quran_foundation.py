@@ -335,22 +335,18 @@ class QuranFoundationClient:
                 continue
             reciter_id = str(item["id"])
             ar_item = arabic_by_id.get(reciter_id, {})
-            style_name = str(item.get("style") or item.get("recitation_style") or "Chapter")
+            style_name = _display_name(item.get("style") or item.get("recitation_style"), "Chapter")
             style_id = normalize_lookup_text(style_name).replace(" ", "-") or "chapter"
             merged.append(
                 ChapterReciter(
                     id=reciter_id,
-                    english_name=str(
-                        item.get("reciter_name")
-                        or item.get("name")
-                        or item.get("translated_name")
-                        or reciter_id
+                    english_name=_display_name(
+                        item.get("reciter_name") or item.get("name") or item.get("translated_name"),
+                        reciter_id,
                     ),
-                    arabic_name=str(
-                        ar_item.get("reciter_name")
-                        or ar_item.get("name")
-                        or item.get("name")
-                        or reciter_id
+                    arabic_name=_display_name(
+                        ar_item.get("reciter_name") or ar_item.get("name") or item.get("name"),
+                        reciter_id,
                     ),
                     style=RecitationStyle(id=style_id, name=style_name),
                     audio_source_name="Quran.Foundation Content API",
@@ -509,6 +505,20 @@ def _translated_name(item: dict[str, Any]) -> str | None:
     translated = item.get("translated_name")
     value = translated.get("name") if isinstance(translated, dict) else translated
     return str(value) if value else None
+
+
+def _display_name(value: Any, default: str = "") -> str:
+    if isinstance(value, dict):
+        translated = value.get("translated_name")
+        if isinstance(translated, dict) and translated.get("name"):
+            return str(translated["name"])
+        if translated:
+            return str(translated)
+        for key in ("name", "reciter_name", "english_name", "text"):
+            if value.get(key):
+                return str(value[key])
+        return default
+    return str(value) if value else default
 
 
 def _total_pages(payload: dict[str, Any], current_page: int) -> int:
