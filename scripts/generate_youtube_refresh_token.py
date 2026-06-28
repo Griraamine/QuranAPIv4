@@ -6,13 +6,20 @@ import os
 
 from google_auth_oauthlib.flow import InstalledAppFlow
 
+from quran_video.config import Settings
 from quran_video.youtube.client import YOUTUBE_SCOPE
 
 
 def main() -> int:
+    settings = Settings()
     parser = argparse.ArgumentParser()
-    parser.add_argument("--client-id", default=os.getenv("YOUTUBE_CLIENT_ID"))
-    parser.add_argument("--client-secret", default=os.getenv("YOUTUBE_CLIENT_SECRET"))
+    parser.add_argument(
+        "--client-id", default=os.getenv("YOUTUBE_CLIENT_ID") or settings.youtube_client_id
+    )
+    parser.add_argument(
+        "--client-secret",
+        default=os.getenv("YOUTUBE_CLIENT_SECRET") or settings.youtube_client_secret,
+    )
     args = parser.parse_args()
     if not args.client_id or not args.client_secret:
         raise SystemExit("YOUTUBE_CLIENT_ID and YOUTUBE_CLIENT_SECRET are required")
