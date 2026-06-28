@@ -1,0 +1,47 @@
+name: Update YouTube Metadata
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: Apply updates to YouTube videos
+        required: true
+        type: boolean
+        default: false
+
+concurrency:
+  group: youtube-metadata-update
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Update YouTube metadata
+        env:
+          QF_CLIENT_ID: ${{ secrets.QF_CLIENT_ID }}
+          QF_CLIENT_SECRET: ${{ secrets.QF_CLIENT_SECRET }}
+          QF_ENV: production
+          QURAN_VIDEO_DATA_MODE: quranfoundation
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_CHANNEL_ID: ${{ secrets.YOUTUBE_CHANNEL_ID }}
+        run: |
+          if [ "${{ inputs.apply }}" = "true" ]; then
+            python scripts/update_youtube_metadata.py --apply
+          else
+            python scripts/update_youtube_metadata.py
+          fi
