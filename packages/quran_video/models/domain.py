@@ -433,6 +433,7 @@ class PendingPostUpload(BaseModel):
 class AutomationState(BaseModel):
     schema_version: int = 1
     surah_queue: list[int] = Field(default_factory=list)
+    background_queue: list[str] = Field(default_factory=list)
     cycle_number: int = 0
     playlist_ids: dict[str, str] = Field(default_factory=dict)
     pending_post_upload: PendingPostUpload | None = None

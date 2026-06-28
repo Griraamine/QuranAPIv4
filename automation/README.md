@@ -1,6 +1,6 @@
 # Automation State
 
-`automation/state.json` stores the shuffled no-repeat surah queue, cycle number, cached playlist IDs, a durable pending post-upload checkpoint, the last success, and recent failures.
+`automation/state.json` stores the shuffled no-repeat surah queue, shuffled no-repeat background queue, cycle number, cached playlist IDs, a durable pending post-upload checkpoint, the last success, and recent failures.
 
 The daily workflow updates this file only after a successful production upload, or after a manual dry run when `advance_state=true`.
 

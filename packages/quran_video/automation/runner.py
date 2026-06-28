@@ -10,13 +10,19 @@ from pathlib import Path
 
 from worker.tasks import _download_audio
 
-from quran_video.automation.state import AutomationStateStore, choose_surah
+from quran_video.automation.state import AutomationStateStore, choose_background, choose_surah
 from quran_video.backgrounds.release import download_random_release_background
 from quran_video.config import get_settings
 from quran_video.config.logging import redact_secret_text
 from quran_video.config.visual_style import load_visual_style
 from quran_video.metadata import generate_metadata
-from quran_video.models import BackgroundMode, ChapterReciter, CompatibilityResult, RenderRequest
+from quran_video.models import (
+    AutomationState,
+    BackgroundMode,
+    ChapterReciter,
+    CompatibilityResult,
+    RenderRequest,
+)
 from quran_video.models.domain import (
     BadgeSettings,
     PendingPostUpload,
@@ -114,8 +120,8 @@ async def _run(settings, context: dict[str, str]) -> int:
         style=render_reciter.style.name,
     )
     context["phase"] = "selecting background"
-    background_path = _select_background(settings)
-    _log_step("selected background", path=str(background_path))
+    background_path, background_id, state = _select_background(settings, state)
+    _log_step("selected background", path=str(background_path), background_id=background_id)
     _log_step("fetching verses")
     verses = await repository.verses(chapter.id)
     _log_step(
@@ -231,7 +237,9 @@ async def _run(settings, context: dict[str, str]) -> int:
                 "surah": surah_id,
                 "reciter": reciter_key,
                 "video": video_url,
+                "background": background_id,
             },
+            background_id,
         )
     if settings.telegram_bot_token and settings.telegram_chat_id:
         client = TelegramClient(settings.telegram_bot_token, settings.telegram_chat_id)
@@ -400,20 +408,25 @@ def _reciter_preference_score(
     return (kids_penalty, murattal_bonus, reciter.english_name.casefold())
 
 
-def _select_background(settings) -> Path:
+def _select_background(settings, state: AutomationState) -> tuple[Path, str, AutomationState]:
     backgrounds = list_backgrounds()
     if backgrounds:
-        selected = secrets.SystemRandom().choice(backgrounds)
-        return settings.backgrounds_dir / selected.id
+        selected_id, state = choose_background(state, [item.id for item in backgrounds])
+        return settings.backgrounds_dir / selected_id, selected_id, state
     if os.getenv("GITHUB_ACTIONS") == "true":
         repository = os.getenv("GITHUB_REPOSITORY")
         if not repository:
             raise RuntimeError("GITHUB_REPOSITORY is required to download background release")
-        return download_random_release_background(
+        selected = download_random_release_background(
             repository,
             settings.backgrounds_dir,
             settings.cache_dir / "background-release-download",
         )
+        try:
+            background_id = selected.relative_to(settings.backgrounds_dir).as_posix()
+        except ValueError:
+            background_id = selected.name
+        return selected, background_id, state
     raise RuntimeError("no local or release-selected background is available")
 
 
