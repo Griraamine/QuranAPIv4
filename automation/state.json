@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    25,
     1,
     84,
     15,
@@ -114,13 +113,14 @@
   ],
   "cycle_number": 1,
   "playlist_ids": {
-    "9:name-murattal-translated-name-name-murattal-language-name-english": "PLGR6DlKSv1rE"
+    "9:name-murattal-translated-name-name-murattal-language-name-english": "PLGR6DlKSv1rE",
+    "9:murattal": "PLGR6DlKSv1rE"
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 51,
-    "reciter": "9:name-murattal-translated-name-name-murattal-language-name-english",
-    "video": "https://www.youtube.com/watch?v=YuGTpp9H0x0"
+    "surah": 25,
+    "reciter": "9:murattal",
+    "video": "https://www.youtube.com/watch?v=d0Kwf5adCfw"
   },
   "recent_failures": []
 }
