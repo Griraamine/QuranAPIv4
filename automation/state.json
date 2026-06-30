@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    84,
     15,
     110,
     32,
@@ -111,7 +110,6 @@
     28
   ],
   "background_queue": [
-    "patrick-hendry-9IJqtCeWim8-unsplash.jpg",
     "kevin-laminto-h2VrZPWLhIU-unsplash.jpg",
     "katerina-kerdi-TAfqq1B3-2s-unsplash.jpg",
     "pj-gal-szabo-qVrc7Hq9YcA-unsplash.jpg",
@@ -173,10 +171,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 1,
+    "surah": 84,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=SgFno82YewM",
-    "background": "bryan-goff-RF4p4rTM-2s-unsplash.jpg"
+    "video": "https://www.youtube.com/watch?v=GuKl8kfeuPU",
+    "background": "patrick-hendry-9IJqtCeWim8-unsplash.jpg"
   },
   "recent_failures": []
 }
