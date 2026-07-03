@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    32,
     42,
     112,
     58,
@@ -108,7 +107,6 @@
     28
   ],
   "background_queue": [
-    "pj-gal-szabo-qVrc7Hq9YcA-unsplash.jpg",
     "8f39d919f3024b859d9106dfb87e1e3d.png",
     "767356.jpg",
     "33335.jpg",
@@ -167,10 +165,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 110,
+    "surah": 32,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=HfZ0qxx5PF4",
-    "background": "katerina-kerdi-TAfqq1B3-2s-unsplash.jpg"
+    "video": "https://www.youtube.com/watch?v=u9VPQcmWfKY",
+    "background": "pj-gal-szabo-qVrc7Hq9YcA-unsplash.jpg"
   },
   "recent_failures": []
 }
