@@ -72,7 +72,7 @@ Add these secrets:
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
 
-The daily workflow has UTC cron entries for 03:00 and 04:00 and gates them to exactly 05:00 Europe/Berlin for CET/CEST. Manual dispatch defaults to `dry_run=true`; dry runs do not advance `automation/state.json` unless `advance_state=true`.
+The automation polls every three hours at minute 37 UTC and starts a production run once the latest successful state update is at least 18 hours old. Scheduled runs check out the current default-branch tip before applying that gate, preventing queued runs from rendering stale state. Manual dispatch defaults to `dry_run=true`; dry runs do not advance `automation/state.json` unless `advance_state=true`.
 
 ## Commands
 

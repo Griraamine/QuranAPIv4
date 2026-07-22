@@ -7,7 +7,7 @@ on:
     paths:
       - .github/workflows/daily-quran-video.yml
   schedule:
-    - cron: '37 * * * *'
+    - cron: '37 */3 * * *'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -36,6 +36,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
+          # Scheduled events can wait behind a long render. Check out the current
+          # branch tip so a queued run sees the state committed by its predecessor.
+          ref: ${{ github.event_name == 'schedule' && github.event.repository.default_branch || github.ref }}
           fetch-depth: 0
       - uses: actions/setup-python@v6
         with:
@@ -57,7 +60,7 @@ jobs:
               run = True
           else:
               run = False
-              if event == "schedule" and schedule == "37 * * * *":
+              if event == "schedule" and schedule == "37 */3 * * *":
                   now = datetime.now(timezone.utc)
                   raw = subprocess.run(
                       ["git", "log", "-1", "--format=%cI", "--", "automation/state.json"],

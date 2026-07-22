@@ -21,6 +21,14 @@ def main() -> int:
     if set(schedules) != expected:
         print(f"unexpected schedule entries: {schedules}", file=sys.stderr)
         return 1
+    checkout = payload["jobs"]["render-and-upload"]["steps"][0]
+    expected_ref = (
+        "${{ github.event_name == 'schedule' && "
+        "github.event.repository.default_branch || github.ref }}"
+    )
+    if checkout.get("with", {}).get("ref") != expected_ref:
+        print("scheduled checkout does not refresh the default branch", file=sys.stderr)
+        return 1
     if not should_run_for_schedule(
         "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 0, 37, tzinfo=UTC)
     ):

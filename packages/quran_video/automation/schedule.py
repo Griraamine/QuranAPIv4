@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import UTC, date, datetime, time
 
-AUTOMATION_SCHEDULE_CRON = "37 * * * *"
+AUTOMATION_SCHEDULE_CRON = "37 */3 * * *"
 AUTOMATION_INTERVAL_HOURS = 18
 
 
