@@ -75,7 +75,7 @@ Add these secrets:
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
 
-The automation polls every three hours at minute 37 UTC and starts a production run once the latest successful state update is at least 18 hours old. Scheduled runs check out the current default-branch tip before applying that gate, preventing queued runs from rendering stale state. Manual dispatch defaults to `dry_run=true`; dry runs do not advance `automation/state.json` unless `advance_state=true`.
+The automation polls every three hours at minute 37 UTC and starts a production run once the latest successful state update is at least 18 hours old. Scheduled runs check out the current default-branch tip before applying that gate, preventing queued runs from rendering stale state. Manual dispatch defaults to `dry_run=true`; dry runs do not advance `automation/state.json` unless `advance_state=true`. Set the manual `auth_check_only` input to verify the stored YouTube credential and channel without rendering, uploading, or advancing state.
 
 ## Commands
 

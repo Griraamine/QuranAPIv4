@@ -116,6 +116,35 @@ async def test_production_authorization_fails_before_quran_fetch_or_render(
     repository.assert_not_called()
 
 
+async def test_auth_check_only_verifies_dry_run_secret_without_rendering(
+    monkeypatch, tmp_path: Path
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("DRY_RUN", "true")
+    monkeypatch.setenv("AUTH_CHECK_ONLY", "true")
+    monkeypatch.setattr(
+        automation_runner.AutomationStateStore,
+        "load",
+        lambda _store: AutomationState(),
+    )
+    client = Mock()
+    client_factory = Mock(return_value=client)
+    repository = Mock(side_effect=AssertionError("auth-only check must not load Quran data"))
+    monkeypatch.setattr(automation_runner, "YouTubeClient", client_factory)
+    monkeypatch.setattr(automation_runner, "QuranRepository", repository)
+    settings = SimpleNamespace(
+        youtube_client_id="client",
+        youtube_client_secret="secret",
+        youtube_refresh_token="refresh",
+        youtube_channel_id="channel",
+    )
+
+    assert await automation_runner._run(settings, {}) == 0
+
+    client.verify_channel.assert_called_once_with()
+    repository.assert_not_called()
+
+
 def test_playlist_normalized_matching() -> None:
     assert normalize_playlist_title(
         " Reciter | قارئ Quran Recitations "

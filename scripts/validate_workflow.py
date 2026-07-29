@@ -29,6 +29,20 @@ def main() -> int:
     if checkout.get("with", {}).get("ref") != expected_ref:
         print("scheduled checkout does not refresh the default branch", file=sys.stderr)
         return 1
+    dispatch_inputs = payload[True]["workflow_dispatch"]["inputs"]
+    if "auth_check_only" not in dispatch_inputs:
+        print("workflow is missing the YouTube authorization-only check", file=sys.stderr)
+        return 1
+    render_step = next(
+        step
+        for step in payload["jobs"]["render-and-upload"]["steps"]
+        if step.get("name") == "Render automation candidate"
+    )
+    if render_step.get("env", {}).get("AUTH_CHECK_ONLY") != (
+        "${{ inputs.auth_check_only || 'false' }}"
+    ):
+        print("workflow does not route the authorization-only input", file=sys.stderr)
+        return 1
     if not should_run_for_schedule(
         "schedule", AUTOMATION_SCHEDULE_CRON, datetime(2026, 1, 1, 0, 37, tzinfo=UTC)
     ):

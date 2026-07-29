@@ -74,15 +74,17 @@ async def _run(settings, context: dict[str, str]) -> int:
     _log_step("loading automation state", path=str(store.path))
     state = store.load()
     dry_run = os.getenv("DRY_RUN", "false").casefold() == "true"
+    auth_check_only = os.getenv("AUTH_CHECK_ONLY", "false").casefold() == "true"
     configured_reciter_query = os.getenv("AUTOMATION_RECITER_QUERY")
     _log_step(
         "automation mode",
         dry_run=dry_run,
+        auth_check_only=auth_check_only,
         advance_state=os.getenv("ADVANCE_STATE", "false"),
         configured_reciter=configured_reciter_query or "cycle default",
     )
     youtube: YouTubeClient | None = None
-    if not dry_run:
+    if not dry_run or auth_check_only:
         context["phase"] = "verifying YouTube authorization"
         _log_step("preflight YouTube authorization")
         youtube = YouTubeClient(
@@ -93,6 +95,9 @@ async def _run(settings, context: dict[str, str]) -> int:
         )
         youtube.verify_channel()
         _log_step("YouTube authorization verified")
+    if auth_check_only:
+        _log_step("YouTube authorization check complete")
+        return 0
     if state.pending_post_upload and not dry_run:
         context["phase"] = "recovering post-upload checkpoint"
         _log_step("recovering post-upload checkpoint", video_id=state.pending_post_upload.video_id)

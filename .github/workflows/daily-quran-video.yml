@@ -20,6 +20,11 @@ on:
         required: true
         type: boolean
         default: false
+      auth_check_only:
+        description: Verify the YouTube secret and channel without rendering or uploading
+        required: true
+        type: boolean
+        default: false
 
 concurrency:
   group: quran-video-automation
@@ -106,6 +111,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           DRY_RUN: ${{ inputs.dry_run || 'false' }}
           ADVANCE_STATE: ${{ inputs.advance_state || 'false' }}
+          AUTH_CHECK_ONLY: ${{ inputs.auth_check_only || 'false' }}
           GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: python -m quran_video.automation.runner
       - name: Commit automation state
