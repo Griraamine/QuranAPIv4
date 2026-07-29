@@ -5,6 +5,7 @@ import time
 from pathlib import Path
 from typing import Any
 
+from google.auth.exceptions import RefreshError
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
@@ -16,6 +17,11 @@ from quran_video.quran.text import normalize_lookup_text
 
 LOGGER = logging.getLogger(__name__)
 YOUTUBE_SCOPE = ["https://www.googleapis.com/auth/youtube"]
+YOUTUBE_REFRESH_TOKEN_HELP = (
+    "YouTube OAuth refresh token was rejected. In Google Auth Platform, change the app's "
+    "Audience publishing status from Testing to In production, then generate a new token with "
+    "scripts/generate_youtube_refresh_token.py and replace YOUTUBE_REFRESH_TOKEN."
+)
 
 
 def normalize_playlist_title(value: str) -> str:
@@ -37,6 +43,13 @@ def classify_google_error(error: Exception) -> str:
     return "retryable"
 
 
+def refresh_youtube_credentials(credentials: Credentials) -> None:
+    try:
+        credentials.refresh(Request())
+    except RefreshError as error:
+        raise RuntimeError(YOUTUBE_REFRESH_TOKEN_HELP) from error
+
+
 class YouTubeClient:
     def __init__(
         self,
@@ -54,7 +67,7 @@ class YouTubeClient:
             client_secret=client_secret,
             scopes=YOUTUBE_SCOPE,
         )
-        credentials.refresh(Request())
+        refresh_youtube_credentials(credentials)
         self.service = build("youtube", "v3", credentials=credentials, cache_discovery=False)
 
     def verify_channel(self) -> None:

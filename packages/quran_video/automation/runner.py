@@ -60,6 +60,11 @@ async def main_async() -> int:
     try:
         return await _run(settings, context)
     except Exception as error:
+        LOGGER.error(
+            "automation failed | phase=%s reason=%s",
+            context.get("phase", "unknown"),
+            _safe_error(settings, error),
+        )
         await _send_failure(settings, context, error)
         return 1
 
@@ -76,10 +81,24 @@ async def _run(settings, context: dict[str, str]) -> int:
         advance_state=os.getenv("ADVANCE_STATE", "false"),
         configured_reciter=configured_reciter_query or "cycle default",
     )
+    youtube: YouTubeClient | None = None
+    if not dry_run:
+        context["phase"] = "verifying YouTube authorization"
+        _log_step("preflight YouTube authorization")
+        youtube = YouTubeClient(
+            settings.youtube_client_id or "",
+            settings.youtube_client_secret or "",
+            settings.youtube_refresh_token or "",
+            settings.youtube_channel_id or "",
+        )
+        youtube.verify_channel()
+        _log_step("YouTube authorization verified")
     if state.pending_post_upload and not dry_run:
         context["phase"] = "recovering post-upload checkpoint"
         _log_step("recovering post-upload checkpoint", video_id=state.pending_post_upload.video_id)
-        _finish_pending_post_upload(settings, store, state)
+        if youtube is None:
+            raise RuntimeError("YouTube authorization preflight did not initialize a client")
+        _finish_pending_post_upload(youtube, store, state)
     surah_id, state = choose_surah(state)
     context["surah"] = str(surah_id)
     _log_step("picked surah", surah_id=surah_id, cycle=state.cycle_number)
@@ -197,14 +216,8 @@ async def _run(settings, context: dict[str, str]) -> int:
     actual_status = "dry-run"
     if not dry_run:
         context["phase"] = "uploading to YouTube"
-        _log_step("verifying YouTube channel")
-        youtube = YouTubeClient(
-            settings.youtube_client_id or "",
-            settings.youtube_client_secret or "",
-            settings.youtube_refresh_token or "",
-            settings.youtube_channel_id or "",
-        )
-        youtube.verify_channel()
+        if youtube is None:
+            raise RuntimeError("YouTube authorization preflight did not initialize a client")
         _log_step("uploading video to YouTube", video=str(output.video_path))
         video_id = youtube.upload_video(output.video_path, metadata)
         _log_step("YouTube upload complete", video_id=video_id)
@@ -443,17 +456,12 @@ def _log_step(message: str, **fields: object) -> None:
     LOGGER.info("%s%s", message, f" | {details}" if details else "")
 
 
-def _finish_pending_post_upload(settings, store: AutomationStateStore, state) -> None:
+def _finish_pending_post_upload(
+    youtube: YouTubeClient, store: AutomationStateStore, state: AutomationState
+) -> None:
     pending = state.pending_post_upload
     if pending is None:
         return
-    youtube = YouTubeClient(
-        settings.youtube_client_id or "",
-        settings.youtube_client_secret or "",
-        settings.youtube_refresh_token or "",
-        settings.youtube_channel_id or "",
-    )
-    youtube.verify_channel()
     metadata = YouTubeMetadata.model_validate(pending.metadata)
     thumbnail_path = Path(pending.thumbnail_path)
     if thumbnail_path.exists():

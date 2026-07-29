@@ -35,11 +35,14 @@ The local default `QURAN_VIDEO_DATA_MODE=fixture` works offline with bundled tes
 2. Enable YouTube Data API v3.
 3. Create OAuth desktop credentials.
 4. Set `YOUTUBE_CLIENT_ID` and `YOUTUBE_CLIENT_SECRET` locally.
-5. Run `python scripts/generate_youtube_refresh_token.py`.
-6. Save the printed `YOUTUBE_REFRESH_TOKEN` as a local env var and GitHub Actions secret.
-7. Obtain the target channel ID from YouTube Studio or `channels.list(mine=true)` and set `YOUTUBE_CHANNEL_ID`.
+5. In Google Auth Platform, open **Audience** and change the external app's publishing status from **Testing** to **In production**. Testing-mode refresh tokens expire after seven days.
+6. Run `python scripts/generate_youtube_refresh_token.py` once.
+7. Save the printed `YOUTUBE_REFRESH_TOKEN` as a local env var and GitHub Actions secret. Avoid routinely generating replacements: Google limits each account/client pair to 100 live refresh tokens and invalidates the oldest tokens above that limit.
+8. Obtain the target channel ID from YouTube Studio or `channels.list(mine=true)` and set `YOUTUBE_CHANNEL_ID`.
 
-The automation verifies that the authenticated channel exactly matches `YOUTUBE_CHANNEL_ID` before upload. If Google forces uploads private because the API project is unaudited, the workflow leaves them private and reports the compliance-audit requirement.
+The automation refreshes the credential and verifies that the authenticated channel exactly matches `YOUTUBE_CHANNEL_ID` before downloading audio or rendering. Invalid credentials therefore fail in seconds with renewal guidance instead of wasting a full render. If Google forces uploads private because the API project is unaudited, the workflow leaves them private and reports the compliance-audit requirement.
+
+Google documents [refresh-token expiration](https://developers.google.com/identity/protocols/oauth2#expiration) and [OAuth audience publishing status](https://support.google.com/cloud/answer/15549945).
 
 ## Telegram Setup
 

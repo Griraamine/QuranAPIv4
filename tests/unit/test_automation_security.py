@@ -4,9 +4,14 @@ import json
 import zipfile
 from datetime import UTC, datetime
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import Mock
 
+import pytest
+from google.auth.exceptions import RefreshError
 from PIL import Image
 
+from quran_video.automation import runner as automation_runner
 from quran_video.automation.schedule import AUTOMATION_SCHEDULE_CRON, should_run_for_schedule
 from quran_video.automation.state import (
     AutomationStateStore,
@@ -23,6 +28,7 @@ from quran_video.backgrounds.release import (
 from quran_video.config.logging import redact_secret_text
 from quran_video.models import AutomationState
 from quran_video.youtube import classify_google_error, normalize_playlist_title
+from quran_video.youtube.client import refresh_youtube_credentials
 
 
 def test_surah_queue_no_repeat_and_schedule_gating(tmp_path: Path) -> None:
@@ -67,6 +73,47 @@ def test_secret_redaction_and_retry_classification(monkeypatch) -> None:
     monkeypatch.setenv("YOUTUBE_REFRESH_TOKEN", "secret-refresh")
     assert "secret-refresh" not in redact_secret_text("token secret-refresh Bearer abc.def")
     assert classify_google_error(RuntimeError("temporary backend")) == "retryable"
+
+
+def test_refresh_token_failure_has_actionable_safe_guidance() -> None:
+    credentials = Mock()
+    credentials.refresh.side_effect = RefreshError("invalid_grant: revoked token")
+
+    with pytest.raises(RuntimeError) as error:
+        refresh_youtube_credentials(credentials)
+
+    message = str(error.value)
+    assert "In production" in message
+    assert "YOUTUBE_REFRESH_TOKEN" in message
+    assert "revoked token" not in message
+
+
+async def test_production_authorization_fails_before_quran_fetch_or_render(
+    monkeypatch, tmp_path: Path
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("DRY_RUN", "false")
+    monkeypatch.setattr(
+        automation_runner.AutomationStateStore,
+        "load",
+        lambda _store: AutomationState(),
+    )
+    rejected_client = Mock(side_effect=RuntimeError("rejected before render"))
+    repository = Mock(side_effect=AssertionError("Quran data must not load before preflight"))
+    monkeypatch.setattr(automation_runner, "YouTubeClient", rejected_client)
+    monkeypatch.setattr(automation_runner, "QuranRepository", repository)
+    settings = SimpleNamespace(
+        youtube_client_id="client",
+        youtube_client_secret="secret",
+        youtube_refresh_token="refresh",
+        youtube_channel_id="channel",
+    )
+
+    with pytest.raises(RuntimeError, match="rejected before render"):
+        await automation_runner._run(settings, {})
+
+    rejected_client.assert_called_once_with("client", "secret", "refresh", "channel")
+    repository.assert_not_called()
 
 
 def test_playlist_normalized_matching() -> None:

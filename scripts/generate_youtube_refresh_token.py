@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import sys
 
 from google_auth_oauthlib.flow import InstalledAppFlow
 
@@ -23,6 +24,11 @@ def main() -> int:
     args = parser.parse_args()
     if not args.client_id or not args.client_secret:
         raise SystemExit("YOUTUBE_CLIENT_ID and YOUTUBE_CLIENT_SECRET are required")
+    print(
+        "Before continuing, set Google Auth Platform > Audience > Publishing status to "
+        "In production. Testing-mode refresh tokens expire after seven days.",
+        file=sys.stderr,
+    )
     flow = InstalledAppFlow.from_client_config(
         {
             "installed": {
@@ -36,7 +42,12 @@ def main() -> int:
         scopes=YOUTUBE_SCOPE,
     )
     credentials = flow.run_local_server(port=0, access_type="offline", prompt="consent")
-    print("YOUTUBE_REFRESH_TOKEN=" + (credentials.refresh_token or ""))
+    if not credentials.refresh_token:
+        raise SystemExit(
+            "Google did not return a refresh token. Revoke the app's existing account access "
+            "and run this command again."
+        )
+    print("YOUTUBE_REFRESH_TOKEN=" + credentials.refresh_token)
     return 0
 
 
