@@ -38,6 +38,7 @@ from quran_video.youtube import YouTubeClient
 
 LOGGER = logging.getLogger(__name__)
 DEFAULT_AUTOMATION_RECITER_QUERY = "minshawi"
+LOW_BACKGROUND_REMAINING_THRESHOLD = 10
 MINSHAWI_ALIASES = (
     "minshawi",
     "menshawi",
@@ -219,6 +220,7 @@ async def _run(settings, context: dict[str, str]) -> int:
     video_url = "dry-run"
     playlist_title = metadata.playlist_title
     actual_status = "dry-run"
+    background_inventory_warning = ""
     if not dry_run:
         context["phase"] = "uploading to YouTube"
         if youtube is None:
@@ -248,6 +250,7 @@ async def _run(settings, context: dict[str, str]) -> int:
         state.pending_post_upload = None
     if not dry_run or os.getenv("ADVANCE_STATE", "false").casefold() == "true":
         _log_step("saving automation success state", surah_id=surah_id)
+        backgrounds_before_success = len(state.background_queue)
         store.mark_success(
             state,
             surah_id,
@@ -259,6 +262,11 @@ async def _run(settings, context: dict[str, str]) -> int:
             },
             background_id,
         )
+        if not dry_run:
+            background_inventory_warning = _background_inventory_warning(
+                backgrounds_before_success,
+                len(state.background_queue),
+            )
     if settings.telegram_bot_token and settings.telegram_chat_id:
         client = TelegramClient(settings.telegram_bot_token, settings.telegram_chat_id)
         lead = "Quran video uploaded"
@@ -273,11 +281,25 @@ async def _run(settings, context: dict[str, str]) -> int:
             f"Ayahs: 1–{request.ayah_to}\nVideo: {video_url}\nPlaylist: {playlist_title}\n"
             f"Visibility: {actual_status}\nDuration: {output.duration_seconds:.1f}s\n"
             f"Workflow: {os.getenv('GITHUB_RUN_URL', 'local')}"
+            f"{background_inventory_warning}"
         )
     else:
         _log_step("Telegram notification skipped", reason="TELEGRAM_BOT_TOKEN/CHAT_ID not set")
     _log_step("automation complete", status=actual_status, video=video_url)
     return 0
+
+
+def _background_inventory_warning(previous_remaining: int, remaining: int) -> str:
+    crossed_threshold = (
+        previous_remaining >= LOW_BACKGROUND_REMAINING_THRESHOLD
+        and remaining < LOW_BACKGROUND_REMAINING_THRESHOLD
+    )
+    if not crossed_threshold:
+        return ""
+    return (
+        "\n\n⚠️ Low background inventory\n"
+        f"Only {remaining} unused backgrounds remain in the current no-repeat cycle."
+    )
 
 
 async def _select_compatible_reciter(

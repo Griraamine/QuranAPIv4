@@ -12,6 +12,7 @@ from google.auth.exceptions import RefreshError
 from PIL import Image
 
 from quran_video.automation import runner as automation_runner
+from quran_video.automation.runner import _background_inventory_warning
 from quran_video.automation.schedule import AUTOMATION_SCHEDULE_CRON, should_run_for_schedule
 from quran_video.automation.state import (
     AutomationStateStore,
@@ -67,6 +68,15 @@ def test_background_queue_no_repeat_until_consumed(tmp_path: Path) -> None:
     next_cycle, state = choose_background(state, ["a.jpg", "b.jpg", "c.jpg"])
 
     assert next_cycle in {"a.jpg", "b.jpg", "c.jpg"}
+
+
+def test_low_background_warning_is_sent_once_when_queue_drops_below_ten() -> None:
+    warning = _background_inventory_warning(previous_remaining=10, remaining=9)
+
+    assert "Low background inventory" in warning
+    assert "Only 9 unused backgrounds remain" in warning
+    assert _background_inventory_warning(previous_remaining=11, remaining=10) == ""
+    assert _background_inventory_warning(previous_remaining=9, remaining=8) == ""
 
 
 def test_secret_redaction_and_retry_classification(monkeypatch) -> None:
