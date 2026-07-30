@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    90,
     69,
     66,
     4,
@@ -86,7 +85,6 @@
     28
   ],
   "background_queue": [
-    "alicia-christin-gerald-_kKU4IUvJAA-unsplash.jpg",
     "jez-timms-8muUTAmcWU4-unsplash.jpg",
     "marita-kavelashvili-ugnrXk1129g-unsplash.jpg",
     "2181713.jpg",
@@ -123,10 +121,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 24,
+    "surah": 90,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=A3FeBruzyK4",
-    "background": "javier-miranda-AlJ9TQqeCV0-unsplash.jpg"
+    "video": "https://www.youtube.com/watch?v=jctxOs0fsWM",
+    "background": "alicia-christin-gerald-_kKU4IUvJAA-unsplash.jpg"
   },
   "recent_failures": []
 }
