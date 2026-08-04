@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    72,
     93,
     31,
     78,
@@ -81,7 +80,6 @@
     28
   ],
   "background_queue": [
-    "faruk-kaymak-CNVvDjVDiVI-unsplash.jpg",
     "julian-hochgesang-4DqsMC4-QQc-unsplash.jpg",
     "sulthan-auliya-rzzS0_pMsD0-unsplash.jpg",
     "yasmine-arfaoui-qbvAboqHkBg-unsplash.jpg",
@@ -113,10 +111,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 34,
+    "surah": 72,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=JceIVAoF3Qc",
-    "background": "david-monje-8vyCtLPlEBo-unsplash.jpg"
+    "video": "https://www.youtube.com/watch?v=KCj6mPMpCSg",
+    "background": "faruk-kaymak-CNVvDjVDiVI-unsplash.jpg"
   },
   "recent_failures": []
 }
