@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    48,
     101,
     97,
     13,
@@ -72,7 +71,6 @@
     28
   ],
   "background_queue": [
-    "767354.jpg",
     "33338.jpg",
     "767351.jpg",
     "33357.jpg",
@@ -95,10 +93,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 102,
+    "surah": 48,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=UJlZqLfMXCg",
-    "background": "5010-L39Q2rM9kdo-unsplash.jpg"
+    "video": "https://www.youtube.com/watch?v=FcTBIIkKV5U",
+    "background": "767354.jpg"
   },
   "recent_failures": []
 }
