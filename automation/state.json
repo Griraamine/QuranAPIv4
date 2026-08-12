@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    101,
     97,
     13,
     33,
@@ -71,7 +70,6 @@
     28
   ],
   "background_queue": [
-    "33338.jpg",
     "767351.jpg",
     "33357.jpg",
     "omar-elsharawy-pwMbtwA9LRc-unsplash.jpg",
@@ -93,10 +91,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 48,
+    "surah": 101,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=FcTBIIkKV5U",
-    "background": "767354.jpg"
+    "video": "https://www.youtube.com/watch?v=6C-BvppPIYs",
+    "background": "33338.jpg"
   },
   "recent_failures": []
 }
