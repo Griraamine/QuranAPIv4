@@ -17,6 +17,13 @@ from quran_video.rendering.media import probe_media, safe_background_path
 from quran_video.subtitles.ass import generate_ass
 from quran_video.thumbnails.generator import generate_thumbnail
 
+OUTPUT_FRAME_RATE = 30
+# A still background does not need to pass through scaling, dimming, and libass
+# thirty times per second.  Render those filters at 15 fps, then let ffmpeg
+# duplicate the completed frames for the 30 fps delivery stream.  This keeps
+# the YouTube output contract while cutting the expensive filter work in half.
+STATIC_BACKGROUND_FILTER_FRAME_RATE = 15
+
 
 class RenderCanceled(RuntimeError):
     pass
@@ -218,7 +225,7 @@ def _single_background_command(
             "-loop",
             "1",
             "-framerate",
-            "30",
+            str(STATIC_BACKGROUND_FILTER_FRAME_RATE),
             "-i",
             str(background_path),
             "-i",
@@ -232,7 +239,7 @@ def _single_background_command(
             "-map",
             "1:a:0",
             "-r",
-            "30",
+            str(OUTPUT_FRAME_RATE),
             "-c:v",
             "libx264",
             "-preset",
@@ -274,7 +281,7 @@ def _single_background_command(
         "-analyzeduration",
         "100M",
         "-r",
-        "30",
+        str(OUTPUT_FRAME_RATE),
         "-c:v",
         "libx264",
         "-preset",
@@ -334,7 +341,7 @@ def _slideshow_command(
         "-map",
         "1:a:0",
         "-r",
-        "30",
+        str(OUTPUT_FRAME_RATE),
         "-c:v",
         "libx264",
         "-preset",
