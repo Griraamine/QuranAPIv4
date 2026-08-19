@@ -18,11 +18,6 @@ from quran_video.subtitles.ass import generate_ass
 from quran_video.thumbnails.generator import generate_thumbnail
 
 OUTPUT_FRAME_RATE = 30
-# A still background does not need to pass through scaling, dimming, and libass
-# thirty times per second.  Render those filters at 15 fps, then let ffmpeg
-# duplicate the completed frames for the 30 fps delivery stream.  This keeps
-# the YouTube output contract while cutting the expensive filter work in half.
-STATIC_BACKGROUND_FILTER_FRAME_RATE = 15
 
 
 class RenderCanceled(RuntimeError):
@@ -217,15 +212,15 @@ def _single_background_command(
     dim_opacity: int,
 ) -> list[str]:
     probe = probe_media(background_path)
-    vf = _video_filter(ass_path, dim_opacity)
+    vf = _video_filter(
+        ass_path,
+        dim_opacity,
+        cache_static_background=probe.media_type == "image",
+    )
     if probe.media_type == "image":
         return [
             "ffmpeg",
             "-y",
-            "-loop",
-            "1",
-            "-framerate",
-            str(STATIC_BACKGROUND_FILTER_FRAME_RATE),
             "-i",
             str(background_path),
             "-i",
@@ -364,7 +359,12 @@ def _slideshow_command(
     ]
 
 
-def _video_filter(ass_path: Path, dim_opacity: int) -> str:
+def _video_filter(
+    ass_path: Path,
+    dim_opacity: int,
+    *,
+    cache_static_background: bool = False,
+) -> str:
     filters = [
         "scale=1920:1080:force_original_aspect_ratio=increase",
         "crop=1920:1080",
@@ -373,6 +373,18 @@ def _video_filter(ass_path: Path, dim_opacity: int) -> str:
         alpha = min(max(dim_opacity, 0), 90) / 100
         filters.append("format=rgba")
         filters.append(f"drawbox=x=0:y=0:w=iw:h=ih:color=black@{alpha:.3f}:t=fill")
+    if cache_static_background:
+        # Scaling, cropping, and dimming a still image on every output frame is
+        # prohibitively expensive for multi-hour surahs. Cache the prepared
+        # frame in the filter graph, then timestamp its duplicates at 30 fps so
+        # libass still renders subtitle changes at full temporal resolution.
+        filters.extend(
+            [
+                "format=yuv420p",
+                "loop=loop=-1:size=1:start=0",
+                f"setpts=N/({OUTPUT_FRAME_RATE}*TB)",
+            ]
+        )
     filters.extend([_ass_filter_arg(ass_path), "format=yuv420p"])
     return ",".join(filters)
 

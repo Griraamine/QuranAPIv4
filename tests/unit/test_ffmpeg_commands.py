@@ -8,7 +8,7 @@ def _option_value(command: list[str], option: str) -> str:
     return command[command.index(option) + 1]
 
 
-def test_still_background_filters_at_half_output_frame_rate(monkeypatch) -> None:
+def test_still_background_preparation_is_cached_before_subtitles(monkeypatch) -> None:
     background = Path("background.jpg")
     monkeypatch.setattr(
         ffmpeg_renderer,
@@ -33,5 +33,10 @@ def test_still_background_filters_at_half_output_frame_rate(monkeypatch) -> None
         dim_opacity=47,
     )
 
-    assert _option_value(command, "-framerate") == "15"
+    assert "-loop" not in command
+    video_filter = _option_value(command, "-vf")
+    assert video_filter.index("scale=") < video_filter.index("loop=loop=-1:size=1:start=0")
+    assert video_filter.index("drawbox=") < video_filter.index("loop=loop=-1:size=1:start=0")
+    assert video_filter.index("loop=loop=-1:size=1:start=0") < video_filter.index("ass=")
+    assert "setpts=N/(30*TB)" in video_filter
     assert _option_value(command, "-r") == "30"
