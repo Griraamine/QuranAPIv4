@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    65,
     6,
     39,
     109,
@@ -63,7 +62,6 @@
     28
   ],
   "background_queue": [
-    "kelly-sikkema-tk9RQCq5eQo-unsplash.jpg",
     "lea-kobal-EJpe9XZwBhU-unsplash.jpg",
     "33381.jpg",
     "simon-wilkes-S297j2CsdlM-unsplash.jpg",
@@ -77,10 +75,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 61,
+    "surah": 65,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=ScwH0T_G1lA",
-    "background": "elisa-kerschbaumer-BVS5gwJDoH0-unsplash.jpg"
+    "video": "https://www.youtube.com/watch?v=DY3DeamSfLo",
+    "background": "kelly-sikkema-tk9RQCq5eQo-unsplash.jpg"
   },
   "recent_failures": []
 }
