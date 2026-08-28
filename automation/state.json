@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    46,
     95,
     106,
     114,
@@ -56,7 +55,6 @@
     28
   ],
   "background_queue": [
-    "elisa-kerschbaumer-BVS5gwJDoH0-unsplash.jpg",
     "patrick-hendry-9IJqtCeWim8-unsplash.jpg",
     "2181713.jpg",
     "patrick-fore-0gkw_9fy0eQ-unsplash.jpg",
@@ -118,10 +116,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 17,
+    "surah": 46,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=PM6lBa69E7A",
-    "background": "yasmine-arfaoui-qbvAboqHkBg-unsplash.jpg"
+    "video": "https://www.youtube.com/watch?v=nAeQtVMxJXI",
+    "background": "elisa-kerschbaumer-BVS5gwJDoH0-unsplash.jpg"
   },
   "recent_failures": []
 }
