@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    114,
     73,
     3,
     80,
@@ -53,7 +52,6 @@
     28
   ],
   "background_queue": [
-    "patrick-fore-0gkw_9fy0eQ-unsplash.jpg",
     "a-a-rNBaaxyeWWM-unsplash.jpg",
     "katerina-kerdi-TAfqq1B3-2s-unsplash.jpg",
     "travis-yewell-F-B7kWlkxDQ-unsplash.jpg",
@@ -112,10 +110,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 106,
+    "surah": 114,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=vtswB_lx8Rw",
-    "background": "2181713.jpg"
+    "video": "https://www.youtube.com/watch?v=rtHR9L06ccg",
+    "background": "patrick-fore-0gkw_9fy0eQ-unsplash.jpg"
   },
   "recent_failures": []
 }
