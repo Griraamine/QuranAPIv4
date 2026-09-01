@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    3,
     80,
     27,
     71,
@@ -51,7 +50,6 @@
     28
   ],
   "background_queue": [
-    "katerina-kerdi-TAfqq1B3-2s-unsplash.jpg",
     "travis-yewell-F-B7kWlkxDQ-unsplash.jpg",
     "julian-hochgesang-4DqsMC4-QQc-unsplash.jpg",
     "harsh-kumar-sQdaoBlGwxY-unsplash.jpg",
@@ -108,10 +106,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 73,
+    "surah": 3,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=cLmV1RlZTEw",
-    "background": "a-a-rNBaaxyeWWM-unsplash.jpg"
+    "video": "https://www.youtube.com/watch?v=HBxYyN0eCU0",
+    "background": "katerina-kerdi-TAfqq1B3-2s-unsplash.jpg"
   },
   "recent_failures": []
 }
