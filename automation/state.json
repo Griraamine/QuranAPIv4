@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    74,
     104,
     41,
     67,
@@ -47,7 +46,6 @@
     28
   ],
   "background_queue": [
-    "33335.jpg",
     "marita-kavelashvili-ugnrXk1129g-unsplash.jpg",
     "peter-herrmann-yqUBn_eMrYc-unsplash.jpg",
     "frank-okay-R1J6Z1cnJZc-unsplash.jpg",
@@ -100,10 +98,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 71,
+    "surah": 74,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=F1XAT4_Qsz0",
-    "background": "harsh-kumar-sQdaoBlGwxY-unsplash.jpg"
+    "video": "https://www.youtube.com/watch?v=YSihzDfJno4",
+    "background": "33335.jpg"
   },
   "recent_failures": []
 }
