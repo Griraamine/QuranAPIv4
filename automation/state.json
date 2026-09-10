@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    9,
     111,
     23,
     40,
@@ -40,7 +39,6 @@
     28
   ],
   "background_queue": [
-    "glenn-carstens-peters-tT_SrSMhhgE-unsplash.jpg",
     "muhammed-ocal-e5JaGRdwjoA-unsplash.jpg",
     "33339.jpg",
     "kevin-laminto-h2VrZPWLhIU-unsplash.jpg",
@@ -86,10 +84,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 75,
+    "surah": 9,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=3TU4hjqiULs",
-    "background": "nhan-hoang-xR5NDbRFfHo-unsplash.jpg"
+    "video": "https://www.youtube.com/watch?v=XeZ-0yhYXYw",
+    "background": "glenn-carstens-peters-tT_SrSMhhgE-unsplash.jpg"
   },
   "recent_failures": []
 }
