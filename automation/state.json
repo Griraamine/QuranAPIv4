@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    54,
     36,
     83,
     63,
@@ -36,7 +35,6 @@
     28
   ],
   "background_queue": [
-    "2181738.jpg",
     "carmine-de-fazio-3ytjETpQMNY-unsplash.jpg",
     "bryan-goff-RF4p4rTM-2s-unsplash.jpg",
     "635071.jpg",
@@ -78,10 +76,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 40,
+    "surah": 54,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=ZeIiifdh7as",
-    "background": "kevin-laminto-h2VrZPWLhIU-unsplash.jpg"
+    "video": "https://www.youtube.com/watch?v=8n9QsbP-G1w",
+    "background": "2181738.jpg"
   },
   "recent_failures": []
 }
