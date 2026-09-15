@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    36,
     83,
     63,
     92,
@@ -35,7 +34,6 @@
     28
   ],
   "background_queue": [
-    "carmine-de-fazio-3ytjETpQMNY-unsplash.jpg",
     "bryan-goff-RF4p4rTM-2s-unsplash.jpg",
     "635071.jpg",
     "simon-wilkes-S297j2CsdlM-unsplash.jpg",
@@ -76,10 +74,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 54,
+    "surah": 36,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=8n9QsbP-G1w",
-    "background": "2181738.jpg"
+    "video": "https://www.youtube.com/watch?v=byO76WS2Yr0",
+    "background": "carmine-de-fazio-3ytjETpQMNY-unsplash.jpg"
   },
   "recent_failures": []
 }
