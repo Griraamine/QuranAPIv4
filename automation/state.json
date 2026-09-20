@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    108,
     53,
     56,
     62,
@@ -30,7 +29,6 @@
     28
   ],
   "background_queue": [
-    "ekrem-osmanoglu-X4SE7io5AgQ-unsplash.jpg",
     "pj-gal-szabo-qVrc7Hq9YcA-unsplash.jpg",
     "767354.jpg",
     "767356.jpg",
@@ -66,10 +64,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 60,
+    "surah": 108,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=Bbq3spFK-TA",
-    "background": "767351.jpg"
+    "video": "https://www.youtube.com/watch?v=OpP5ChU8xO8",
+    "background": "ekrem-osmanoglu-X4SE7io5AgQ-unsplash.jpg"
   },
   "recent_failures": []
 }
