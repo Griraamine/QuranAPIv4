@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    50,
     49,
     103,
     81,
@@ -25,7 +24,6 @@
     28
   ],
   "background_queue": [
-    "8f39d919f3024b859d9106dfb87e1e3d.png",
     "sample-fixture-background.jpg",
     "abhishek-koli-PMxTK-bHZhs-unsplash.jpg",
     "faruk-kaymak-CNVvDjVDiVI-unsplash.jpg",
@@ -56,10 +54,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 79,
+    "surah": 50,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=WbzqujIQLdk",
-    "background": "33355.jpg"
+    "video": "https://www.youtube.com/watch?v=TalWrspEXNk",
+    "background": "8f39d919f3024b859d9106dfb87e1e3d.png"
   },
   "recent_failures": []
 }
