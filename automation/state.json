@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    87,
     85,
     20,
     14,
@@ -19,7 +18,6 @@
     28
   ],
   "background_queue": [
-    "33350.jpg",
     "david-monje-8vyCtLPlEBo-unsplash.jpg",
     "33338.jpg",
     "masjid-pogung-dalangan-DBsQFuIbXg4-unsplash.jpg",
@@ -44,10 +42,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 89,
+    "surah": 87,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=RGfHtdpaJyY",
-    "background": "33352.jpg"
+    "video": "https://www.youtube.com/watch?v=Iob7r_T_eEM",
+    "background": "33350.jpg"
   },
   "recent_failures": []
 }
