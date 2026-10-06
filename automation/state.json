@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "surah_queue": [
-    113,
     21,
     29,
     52,
@@ -13,7 +12,6 @@
     28
   ],
   "background_queue": [
-    "joanna-kosinska-B6yDtYs2IgY-unsplash.jpg",
     "ali-arif-soydas-uwzPks8CE3k-unsplash.jpg",
     "kelly-sikkema-tk9RQCq5eQo-unsplash.jpg",
     "sulthan-auliya-rzzS0_pMsD0-unsplash.jpg",
@@ -32,10 +30,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 18,
+    "surah": 113,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=_ZQIW-RtPo8",
-    "background": "lea-kobal-EJpe9XZwBhU-unsplash.jpg"
+    "video": "https://www.youtube.com/watch?v=0fk8vAVMOFI",
+    "background": "joanna-kosinska-B6yDtYs2IgY-unsplash.jpg"
   },
   "recent_failures": []
 }
