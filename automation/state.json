@@ -1,10 +1,7 @@
 {
   "schema_version": 1,
-  "surah_queue": [
-    28
-  ],
+  "surah_queue": [],
   "background_queue": [
-    "14737.jpg",
     "yuanpang-wa-3lFNAyb3uzI-unsplash.jpg"
   ],
   "cycle_number": 1,
@@ -14,10 +11,10 @@
   },
   "pending_post_upload": null,
   "last_success": {
-    "surah": 7,
+    "surah": 28,
     "reciter": "9:murattal",
-    "video": "https://www.youtube.com/watch?v=W8Yw4sZfhY8",
-    "background": "javier-miranda-AlJ9TQqeCV0-unsplash.jpg"
+    "video": "https://www.youtube.com/watch?v=h8j3OGx3zJo",
+    "background": "14737.jpg"
   },
   "recent_failures": []
 }
