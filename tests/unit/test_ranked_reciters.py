@@ -114,13 +114,20 @@ async def test_variants_share_completion_and_stable_preference():
     assert chosen is not None and chosen[0] == 1 and chosen[1].id == "7"
 
 
-async def test_unavailable_surah_is_recorded_then_reciter_continues():
+@pytest.mark.parametrize(
+    "reason",
+    [
+        "Quran.Foundation audio failed with HTTP 404",
+        "Quran.Foundation audio response has no ayah timestamps",
+    ],
+)
+async def test_unavailable_surah_is_recorded_then_reciter_continues(reason):
     async def check(chapter_id, reciter_id, moshaf_id):
         return CompatibilityResult(
             chapter_id=chapter_id,
             reciter_id=reciter_id,
             compatible=chapter_id != 20,
-            reason="Quran.Foundation audio failed with HTTP 404",
+            reason=reason,
         )
 
     state = AutomationState(

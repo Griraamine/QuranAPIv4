@@ -136,7 +136,11 @@ async def select_next_recitation(
                     reason = result.reason or str(result.status or "incompatible")
                     # Repository converts provider exceptions into incompatible results.
                     # Outages/auth errors must retry the same work, not consume a surah.
-                    if reason.startswith("Quran.Foundation") and "HTTP 404" not in reason:
+                    if (
+                        reason.startswith("Quran.Foundation")
+                        and "HTTP 404" not in reason
+                        and "audio response has no ayah timestamps" not in reason
+                    ):
                         raise RuntimeError(f"cannot check {key} surah {surah_id}: {reason}")
                     reasons.append(reason)
             state.skipped_reciter_surahs[pair] = "; ".join(reasons)
