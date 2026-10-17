@@ -6,6 +6,7 @@ import re
 from dataclasses import dataclass
 from typing import Any
 
+from quran_video.automation.checkpoint import marked_description
 from quran_video.config import Settings
 from quran_video.metadata import generate_metadata
 from quran_video.models import Chapter, ChapterReciter
@@ -198,6 +199,15 @@ def _match_video(
 def _update_video(youtube: YouTubeClient, video: dict[str, Any], match: VideoMatch) -> None:
     metadata = generate_metadata(match.chapter, match.reciter, match.ayah_from, match.ayah_to)
     snippet = video["snippet"]
+    marker = re.search(
+        r"^\[quran-video-pair:([^\]\r\n]+)\]$", snippet.get("description", ""), re.MULTILINE
+    )
+    if marker:
+        metadata = metadata.model_copy(
+            update={
+                "description": marked_description(metadata.description, marker.group(1)),
+            }
+        )
     snippet_body: dict[str, Any] = {
         "title": metadata.title,
         "description": metadata.description,

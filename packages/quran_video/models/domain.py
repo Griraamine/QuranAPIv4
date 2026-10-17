@@ -426,7 +426,8 @@ class YouTubeMetadata(BaseModel):
 class PendingPostUpload(BaseModel):
     surah_id: int | None = None
     background_id: str | None = None
-    video_id: str
+    video_id: str | None = None
+    pair_key: str | None = None
     thumbnail_path: str
     reciter_key: str
     metadata: dict[str, Any]

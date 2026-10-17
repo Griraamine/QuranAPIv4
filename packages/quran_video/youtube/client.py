@@ -76,6 +76,44 @@ class YouTubeClient:
         if not items or items[0]["id"] != self.channel_id:
             raise RuntimeError("authenticated YouTube channel does not match YOUTUBE_CHANNEL_ID")
 
+    def find_pair_video(self, marker: str) -> str | None:
+        response = self.service.channels().list(part="contentDetails", id=self.channel_id).execute()
+        items = response.get("items", [])
+        if not items:
+            raise RuntimeError("cannot inspect the target channel's upload history")
+        uploads = items[0]["contentDetails"]["relatedPlaylists"]["uploads"]
+        page_token: str | None = None
+        matches: set[str] = set()
+        while True:
+            page = (
+                self.service.playlistItems()
+                .list(
+                    part="contentDetails",
+                    playlistId=uploads,
+                    maxResults=50,
+                    pageToken=page_token,
+                )
+                .execute()
+            )
+            ids = [item["contentDetails"]["videoId"] for item in page.get("items", [])]
+            if ids:
+                videos = self.service.videos().list(part="snippet", id=",".join(ids)).execute()
+                for video in videos.get("items", []):
+                    snippet = video["snippet"]
+                    if (
+                        snippet.get("channelId") == self.channel_id
+                        and marker in snippet.get("description", "").splitlines()
+                    ):
+                        matches.add(video["id"])
+            page_token = page.get("nextPageToken")
+            if not page_token:
+                break
+        if len(matches) > 1:
+            raise RuntimeError(
+                "multiple videos already exist for this pair; refusing another upload"
+            )
+        return next(iter(matches), None)
+
     def upload_video(self, video_path: Path, metadata: YouTubeMetadata) -> str:
         body = {
             "snippet": {
@@ -159,6 +197,18 @@ class YouTubeClient:
         return created["id"]
 
     def add_to_playlist(self, playlist_id: str, video_id: str) -> None:
+        existing = (
+            self.service.playlistItems()
+            .list(
+                part="id",
+                playlistId=playlist_id,
+                videoId=video_id,
+                maxResults=1,
+            )
+            .execute()
+        )
+        if existing.get("items"):
+            return
         try:
             self.service.playlistItems().insert(
                 part="snippet",

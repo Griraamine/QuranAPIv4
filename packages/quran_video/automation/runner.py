@@ -8,7 +8,12 @@ from pathlib import Path
 
 from worker.tasks import _download_audio
 
-from quran_video.automation.reciters import select_next_recitation
+from quran_video.automation.checkpoint import (
+    marked_description,
+    pair_marker,
+    persist_upload_checkpoint,
+)
+from quran_video.automation.reciters import completion_key, select_next_recitation
 from quran_video.automation.state import AutomationStateStore, choose_background
 from quran_video.backgrounds.release import download_random_release_background
 from quran_video.config import get_settings
@@ -134,6 +139,25 @@ async def _run(settings, context: dict[str, str]) -> int:
         moshaf_id=selected_moshaf_id or "none",
         style=render_reciter.style.name,
     )
+    pair_key = completion_key(state.active_reciter_key or reciter_key, surah_id)
+    if not dry_run:
+        if youtube is None:
+            raise RuntimeError("YouTube authorization preflight did not initialize a client")
+        existing_id = youtube.find_pair_video(pair_marker(pair_key))
+        if existing_id:
+            _log_step("pair already uploaded; recovering without rendering", video_id=existing_id)
+            existing_metadata = generate_metadata(chapter, render_reciter, 1, chapter.verse_count)
+            state.pending_post_upload = PendingPostUpload(
+                video_id=existing_id,
+                pair_key=pair_key,
+                surah_id=surah_id,
+                thumbnail_path="",
+                reciter_key=reciter_key,
+                metadata=existing_metadata.model_dump(),
+            )
+            persist_upload_checkpoint(store, state)
+            _finish_pending_post_upload(youtube, store, state)
+            return 0
     context["phase"] = "selecting background"
     background_path, background_id, state = _select_background(settings, state)
     _log_step("selected background", path=str(background_path), background_id=background_id)
@@ -206,6 +230,11 @@ async def _run(settings, context: dict[str, str]) -> int:
         )
     _log_step("generating metadata")
     metadata = generate_metadata(chapter, render_reciter, 1, request.ayah_to)
+    metadata = metadata.model_copy(
+        update={
+            "description": marked_description(metadata.description, pair_key),
+        }
+    )
     _log_step("metadata ready", title=metadata.title, tag_count=len(metadata.tags))
     video_url = "dry-run"
     playlist_title = metadata.playlist_title
@@ -215,18 +244,16 @@ async def _run(settings, context: dict[str, str]) -> int:
         context["phase"] = "uploading to YouTube"
         if youtube is None:
             raise RuntimeError("YouTube authorization preflight did not initialize a client")
-        _log_step("uploading video to YouTube", video=str(output.video_path))
-        video_id = youtube.upload_video(output.video_path, metadata)
-        _log_step("YouTube upload complete", video_id=video_id)
-        state.pending_post_upload = PendingPostUpload(
-            video_id=video_id,
+        pending = PendingPostUpload(
+            pair_key=pair_key,
             surah_id=surah_id,
             background_id=background_id,
             thumbnail_path=str(output.thumbnail_path),
             reciter_key=reciter_key,
             metadata=metadata.model_dump(),
         )
-        store.save(state)
+        video_id = _upload_reserved_pair(youtube, store, state, pending, output.video_path)
+        _log_step("YouTube upload complete", video_id=video_id)
         context["phase"] = "post-upload YouTube steps"
         _log_step("setting YouTube thumbnail", thumbnail=str(output.thumbnail_path))
         youtube.set_thumbnail(video_id, output.thumbnail_path)
@@ -329,15 +356,47 @@ def _log_step(message: str, **fields: object) -> None:
     LOGGER.info("%s%s", message, f" | {details}" if details else "")
 
 
+def _upload_reserved_pair(
+    youtube: YouTubeClient,
+    store: AutomationStateStore,
+    state: AutomationState,
+    pending: PendingPostUpload,
+    video_path: Path,
+) -> str:
+    if state.pending_post_upload is not None:
+        raise RuntimeError("an upload reservation already exists; refusing another upload")
+    if not pending.pair_key or pending.pair_key in state.completed_reciter_surahs:
+        raise RuntimeError("pair is missing or already completed; refusing another upload")
+    state.pending_post_upload = pending
+    # A runner loss or lost YouTube acknowledgement now leaves a durable reservation.
+    persist_upload_checkpoint(store, state)
+    metadata = YouTubeMetadata.model_validate(pending.metadata)
+    _log_step("uploading reserved pair to YouTube", pair=pending.pair_key)
+    video_id = youtube.upload_video(video_path, metadata)
+    pending.video_id = video_id
+    persist_upload_checkpoint(store, state)
+    return video_id
+
+
 def _finish_pending_post_upload(
     youtube: YouTubeClient, store: AutomationStateStore, state: AutomationState
 ) -> None:
     pending = state.pending_post_upload
     if pending is None:
         return
+    if pending.video_id is None:
+        if not pending.pair_key:
+            raise RuntimeError("unresolved upload reservation has no pair identifier")
+        video_id = youtube.find_pair_video(pair_marker(pending.pair_key))
+        if video_id is None:
+            raise RuntimeError(
+                "previous upload outcome is unresolved; reservation retained, refusing to re-upload"
+            )
+        pending.video_id = video_id
+        persist_upload_checkpoint(store, state)
     metadata = YouTubeMetadata.model_validate(pending.metadata)
     thumbnail_path = Path(pending.thumbnail_path)
-    if thumbnail_path.exists():
+    if thumbnail_path.is_file():
         youtube.set_thumbnail(pending.video_id, thumbnail_path)
     playlist_id = youtube.find_or_create_playlist(
         metadata,
