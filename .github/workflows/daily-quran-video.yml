@@ -55,9 +55,11 @@ jobs:
           EVENT_SCHEDULE: ${{ github.event.schedule }}
         run: |
           python - <<'PY'
+          import json
           import os
           import subprocess
           from datetime import datetime, timedelta, timezone
+          from pathlib import Path
 
           event = os.environ["EVENT_NAME"]
           schedule = os.environ.get("EVENT_SCHEDULE") or None
@@ -67,13 +69,16 @@ jobs:
               run = False
               if event == "schedule" and schedule == "37 */3 * * *":
                   now = datetime.now(timezone.utc)
-                  raw = subprocess.run(
+                  state = json.loads(Path("automation/state.json").read_text())
+                  raw = state.get("last_success_at") or subprocess.run(
                       ["git", "log", "-1", "--format=%cI", "--", "automation/state.json"],
                       check=False,
                       capture_output=True,
                       text=True,
                   ).stdout.strip()
-                  if not raw:
+                  if state.get("pending_post_upload"):
+                      run = True
+                  elif not raw:
                       run = True
                   else:
                       last_success = datetime.fromisoformat(raw.replace("Z", "+00:00"))
@@ -115,7 +120,7 @@ jobs:
           GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: python -m quran_video.automation.runner
       - name: Commit automation state
-        if: steps.gate.outputs.run == 'true' && success()
+        if: steps.gate.outputs.run == 'true' && !cancelled()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

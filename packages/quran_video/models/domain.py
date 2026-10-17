@@ -424,6 +424,8 @@ class YouTubeMetadata(BaseModel):
 
 
 class PendingPostUpload(BaseModel):
+    surah_id: int | None = None
+    background_id: str | None = None
     video_id: str
     thumbnail_path: str
     reciter_key: str
@@ -432,10 +434,15 @@ class PendingPostUpload(BaseModel):
 
 class AutomationState(BaseModel):
     schema_version: int = 1
+    reciter_queue: list[str] = Field(default_factory=list)
+    active_reciter_key: str | None = None
+    completed_reciter_surahs: list[str] = Field(default_factory=list)
+    skipped_reciter_surahs: dict[str, str] = Field(default_factory=dict)
     surah_queue: list[int] = Field(default_factory=list)
     background_queue: list[str] = Field(default_factory=list)
     cycle_number: int = 0
     playlist_ids: dict[str, str] = Field(default_factory=dict)
     pending_post_upload: PendingPostUpload | None = None
+    last_success_at: str | None = None
     last_success: dict[str, Any] | None = None
     recent_failures: list[dict[str, Any]] = Field(default_factory=list)

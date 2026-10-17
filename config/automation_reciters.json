@@ -1,0 +1,116 @@
+{
+  "source_url": "https://www.assabile.com/quran",
+  "checked_at": "2026-10-17",
+  "basis": "Assabile listen-count order, filtered to Quran.Foundation performers. This is a demand proxy, not a worldwide or YouTube ranking. Unlisted performers follow alphabetically. IDs within each performer are preferred in the listed order; publish each surah once per performer.",
+  "provider": "quranfoundation",
+  "reciters": [
+    {
+      "key": "sudais",
+      "name": "Abdul Rahman Al-Sudais",
+      "provider_ids": [
+        "3"
+      ]
+    },
+    {
+      "key": "ghamdi",
+      "name": "Saad Al-Ghamdi",
+      "provider_ids": [
+        "13"
+      ]
+    },
+    {
+      "key": "alafasy",
+      "name": "Mishary Rashid Alafasy",
+      "provider_ids": [
+        "7",
+        "173"
+      ]
+    },
+    {
+      "key": "muaiqly",
+      "name": "Maher Al-Muaiqly",
+      "provider_ids": [
+        "159"
+      ]
+    },
+    {
+      "key": "abdul-basit",
+      "name": "Abdul Basit Abdul Samad",
+      "provider_ids": [
+        "2"
+      ]
+    },
+    {
+      "key": "shuraim",
+      "name": "Saud Al-Shuraim",
+      "provider_ids": [
+        "10"
+      ]
+    },
+    {
+      "key": "ajmi",
+      "name": "Ahmed Al-Ajmi",
+      "provider_ids": [
+        "19"
+      ]
+    },
+    {
+      "key": "husary",
+      "name": "Mahmoud Khalil Al-Husary",
+      "provider_ids": [
+        "6",
+        "12"
+      ]
+    },
+    {
+      "key": "minshawi",
+      "name": "Mohamed Siddiq Al-Minshawi",
+      "provider_ids": [
+        "9",
+        "168"
+      ]
+    },
+    {
+      "key": "dosari",
+      "name": "Yasser Al-Dosari",
+      "provider_ids": [
+        "174"
+      ]
+    },
+    {
+      "key": "shatri",
+      "name": "Abu Bakr Al-Shatri",
+      "provider_ids": [
+        "4"
+      ]
+    },
+    {
+      "key": "jaber",
+      "name": "Ali Jaber",
+      "provider_ids": [
+        "158"
+      ]
+    },
+    {
+      "key": "tunaiji",
+      "name": "Khalifah Al-Tunaiji",
+      "provider_ids": [
+        "161"
+      ]
+    },
+    {
+      "key": "rifai",
+      "name": "Hani Ar-Rifai",
+      "provider_ids": [
+        "5"
+      ]
+    },
+    {
+      "key": "akhdar",
+      "name": "Ibrahim Al-Akhdar",
+      "provider_ids": [
+        "1"
+      ]
+    }
+  ]
+}

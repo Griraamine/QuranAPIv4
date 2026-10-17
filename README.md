@@ -75,7 +75,15 @@ Add these secrets:
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
 
-The automation polls every three hours at minute 37 UTC and starts a production run once the latest successful state update is at least 18 hours old. Scheduled runs check out the current default-branch tip before applying that gate, preventing queued runs from rendering stale state. Manual dispatch defaults to `dry_run=true`; dry runs do not advance `automation/state.json` unless `advance_state=true`. Set the manual `auth_check_only` input to verify the stored YouTube credential and channel without rendering, uploading, or advancing state.
+The automation polls every three hours at minute 37 UTC and starts a production run once the last successful upload is at least 18 hours old. Scheduled runs check out the current default-branch tip before applying that gate, preventing queued runs from rendering stale state. Manual dispatch defaults to `dry_run=true`; dry runs do not advance `automation/state.json` unless `advance_state=true`. Set the manual `auth_check_only` input to verify the stored YouTube credential and channel without rendering, uploading, or advancing state.
+
+## Reciter progression
+
+Automation completes every render-compatible surah for one performer before moving to the next. `config/automation_reciters.json` pins the popularity order using [Assabile's listen-count ranking](https://www.assabile.com/quran), checked October 17, 2026, filtered to the Quran.Foundation catalog. It starts with Al-Sudais, Al-Ghamdi, Alafasy, Al-Muaiqly, Abdul Basit, and Al-Shuraim. This is a demand proxy rather than a worldwide or YouTube ranking. Performers absent from that source follow alphabetically; new popularity data can be reviewed by editing the config without interrupting the active queue.
+
+Surahs remain shuffled without repetition within each performer. Alternate recordings/styles are grouped under that performer, with the preferred recording tried first. Completed performer/surah pairs are never republished. Unavailable recitations are recorded with their reasons; provider outages fail the run without consuming work. An exhausted queue stops uploading instead of restarting. `AUTOMATION_RECITER_QUERY` can explicitly select one performer when initializing a new queue; random overrides and overrides conflicting with an active queue are rejected.
+
+Successful upload history from the repository was recovered into state during the migration, including old style-key variants. The migration preserves background rotation, playlists, and the actual last-success timestamp. The 18-hour interval uses that timestamp, so configuration/state maintenance cannot postpone the next upload. Pending post-upload checkpoints are committed even when playlist steps fail, and recovery finishes the existing upload and marks that surah complete before the next interval.
 
 ## Commands
 

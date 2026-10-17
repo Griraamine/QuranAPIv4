@@ -3,14 +3,13 @@ from __future__ import annotations
 import asyncio
 import logging
 import os
-import secrets
 import tempfile
-from collections.abc import Awaitable, Callable
 from pathlib import Path
 
 from worker.tasks import _download_audio
 
-from quran_video.automation.state import AutomationStateStore, choose_background, choose_surah
+from quran_video.automation.reciters import select_next_recitation
+from quran_video.automation.state import AutomationStateStore, choose_background
 from quran_video.backgrounds.release import download_random_release_background
 from quran_video.config import get_settings
 from quran_video.config.logging import redact_secret_text
@@ -19,8 +18,6 @@ from quran_video.metadata import generate_metadata
 from quran_video.models import (
     AutomationState,
     BackgroundMode,
-    ChapterReciter,
-    CompatibilityResult,
     RenderRequest,
 )
 from quran_video.models.domain import (
@@ -31,22 +28,12 @@ from quran_video.models.domain import (
 from quran_video.notifications import TelegramClient
 from quran_video.quran.compatibility import build_range_timeline
 from quran_video.quran.repository import QuranRepository
-from quran_video.quran.text import normalize_lookup_text
 from quran_video.rendering.ffmpeg import render_video
 from quran_video.rendering.media import list_backgrounds
 from quran_video.youtube import YouTubeClient
 
 LOGGER = logging.getLogger(__name__)
-DEFAULT_AUTOMATION_RECITER_QUERY = "minshawi"
 LOW_BACKGROUND_REMAINING_THRESHOLD = 10
-MINSHAWI_ALIASES = (
-    "minshawi",
-    "menshawi",
-    "menshawy",
-    "manshawi",
-    "منشاوي",
-    "المنشاوي",
-)
 
 
 async def main_async() -> int:
@@ -82,7 +69,7 @@ async def _run(settings, context: dict[str, str]) -> int:
         dry_run=dry_run,
         auth_check_only=auth_check_only,
         advance_state=os.getenv("ADVANCE_STATE", "false"),
-        configured_reciter=configured_reciter_query or "cycle default",
+        configured_reciter=configured_reciter_query or "ranked queue",
     )
     youtube: YouTubeClient | None = None
     if not dry_run or auth_check_only:
@@ -105,15 +92,27 @@ async def _run(settings, context: dict[str, str]) -> int:
         if youtube is None:
             raise RuntimeError("YouTube authorization preflight did not initialize a client")
         _finish_pending_post_upload(youtube, store, state)
-    surah_id, state = choose_surah(state)
-    context["surah"] = str(surah_id)
-    _log_step("picked surah", surah_id=surah_id, cycle=state.cycle_number)
-    reciter_query = _reciter_query_for_cycle(state.cycle_number, configured_reciter_query)
-    _log_step("selected reciter policy", cycle=state.cycle_number, preferred_reciter=reciter_query)
+        _log_step("recovered existing upload; next render waits for the next interval")
+        return 0
     repository = QuranRepository(settings)
     context["phase"] = "fetching Quran data"
     _log_step("fetching chapters")
     chapters = await repository.chapters()
+    reciters = await repository.reciters()
+    context["phase"] = "selecting ranked reciter and surah"
+    selection = await select_next_recitation(
+        repository.compatibility, reciters, state, configured_reciter_query
+    )
+    if selection is None:
+        _log_step("all ranked reciters completed; no upload required")
+        if not dry_run or os.getenv("ADVANCE_STATE", "false").casefold() == "true":
+            store.save(state)
+        return 0
+    surah_id, reciter, selected_moshaf_id = selection
+    context["surah"] = str(surah_id)
+    _log_step(
+        "picked ranked reciter-surah job", surah_id=surah_id, reciter=state.active_reciter_key
+    )
     chapter = next(item for item in chapters if item.id == surah_id)
     _log_step(
         "selected chapter",
@@ -121,15 +120,6 @@ async def _run(settings, context: dict[str, str]) -> int:
         english=chapter.english_name,
         arabic=chapter.arabic_name,
         ayahs=chapter.verse_count,
-    )
-    _log_step("fetching reciters")
-    reciters = await repository.reciters()
-    _log_step("reciters loaded", count=len(reciters))
-    reciter, selected_moshaf_id = await _select_compatible_reciter(
-        repository.compatibility,
-        chapter.id,
-        reciters,
-        reciter_query,
     )
     render_reciter = await repository.reciter_for_request(reciter.id, selected_moshaf_id)
     reciter_key = (
@@ -230,6 +220,8 @@ async def _run(settings, context: dict[str, str]) -> int:
         _log_step("YouTube upload complete", video_id=video_id)
         state.pending_post_upload = PendingPostUpload(
             video_id=video_id,
+            surah_id=surah_id,
+            background_id=background_id,
             thumbnail_path=str(output.thumbnail_path),
             reciter_key=reciter_key,
             metadata=metadata.model_dump(),
@@ -302,152 +294,6 @@ def _background_inventory_warning(previous_remaining: int, remaining: int) -> st
     )
 
 
-async def _select_compatible_reciter(
-    compatibility: Callable[[int, str, str | None], Awaitable[CompatibilityResult]],
-    chapter_id: int,
-    reciters: list[ChapterReciter],
-    preferred_query: str | None,
-) -> tuple[ChapterReciter, str | None]:
-    preferred_reciters = _preferred_reciters(reciters, preferred_query)
-    if preferred_reciters:
-        _log_step(
-            "checking preferred reciter compatibility",
-            preferred=preferred_query or "random",
-            candidates=len(preferred_reciters),
-        )
-        compatible = await _compatible_reciter_options(
-            compatibility,
-            chapter_id,
-            preferred_reciters,
-            stop_after_first=False,
-        )
-        if compatible:
-            selected = sorted(compatible, key=lambda item: _reciter_preference_score(*item))[0]
-            _log_step(
-                "preferred reciter is compatible",
-                reciter_id=selected[0].id,
-                english=selected[0].english_name,
-                moshaf_id=selected[1] or "none",
-            )
-            return selected
-        raise RuntimeError(
-            f"preferred reciter {preferred_query!r} is not compatible with surah {chapter_id}"
-        )
-
-    _log_step("checking reciter compatibility", preferred="random", candidates=len(reciters))
-    compatible = await _compatible_reciter_options(
-        compatibility,
-        chapter_id,
-        reciters,
-        stop_after_first=False,
-    )
-    if not compatible:
-        raise RuntimeError(f"no compatible reciters for surah {chapter_id}")
-    selected = secrets.SystemRandom().choice(compatible)
-    _log_step(
-        "random compatible reciter selected",
-        compatible_count=len(compatible),
-        reciter_id=selected[0].id,
-        english=selected[0].english_name,
-        moshaf_id=selected[1] or "none",
-    )
-    return selected
-
-
-async def _compatible_reciter_options(
-    compatibility: Callable[[int, str, str | None], Awaitable[CompatibilityResult]],
-    chapter_id: int,
-    reciters: list[ChapterReciter],
-    *,
-    stop_after_first: bool,
-) -> list[tuple[ChapterReciter, str | None]]:
-    compatible: list[tuple[ChapterReciter, str | None]] = []
-    for reciter in reciters:
-        moshaf_ids: list[str | None] = (
-            [None] if not reciter.moshafs else [moshaf.id for moshaf in reciter.moshafs]
-        )
-        for moshaf_id in moshaf_ids:
-            _log_step(
-                "checking compatibility",
-                reciter_id=reciter.id,
-                english=reciter.english_name,
-                moshaf_id=moshaf_id or "none",
-            )
-            result = await compatibility(chapter_id, reciter.id, moshaf_id)
-            if result.compatible:
-                compatible.append((reciter, moshaf_id))
-                if stop_after_first:
-                    return compatible
-            else:
-                _log_step(
-                    "reciter incompatible",
-                    reciter_id=reciter.id,
-                    moshaf_id=moshaf_id or "none",
-                    reason=result.reason or result.status or "unknown",
-                )
-    return compatible
-
-
-def _preferred_reciters(
-    reciters: list[ChapterReciter], preferred_query: str | None
-) -> list[ChapterReciter]:
-    query = normalize_lookup_text(preferred_query or "")
-    if not query or query in {"random", "*", "any"}:
-        return []
-    aliases = _reciter_query_aliases(query)
-    matches = [reciter for reciter in reciters if _reciter_matches(reciter, aliases)]
-    return sorted(matches, key=lambda reciter: _reciter_preference_score(reciter, None))
-
-
-def _reciter_query_for_cycle(cycle_number: int, configured_query: str | None) -> str:
-    if configured_query and configured_query.strip():
-        return configured_query.strip()
-    if cycle_number <= 1:
-        return DEFAULT_AUTOMATION_RECITER_QUERY
-    return "random"
-
-
-def _reciter_query_aliases(query: str) -> tuple[str, ...]:
-    if query in {normalize_lookup_text(alias) for alias in MINSHAWI_ALIASES}:
-        return tuple(normalize_lookup_text(alias) for alias in MINSHAWI_ALIASES)
-    return (query,)
-
-
-def _reciter_matches(reciter: ChapterReciter, aliases: tuple[str, ...]) -> bool:
-    haystack = normalize_lookup_text(
-        " ".join(
-            [
-                reciter.id,
-                reciter.english_name,
-                reciter.arabic_name,
-                reciter.style.id,
-                reciter.style.name,
-            ]
-        )
-    )
-    return any(alias and alias in haystack for alias in aliases)
-
-
-def _reciter_preference_score(
-    reciter: ChapterReciter, moshaf_id: str | None
-) -> tuple[int, int, str]:
-    haystack = normalize_lookup_text(
-        " ".join(
-            [
-                reciter.id,
-                reciter.english_name,
-                reciter.arabic_name,
-                reciter.style.id,
-                reciter.style.name,
-                moshaf_id or "",
-            ]
-        )
-    )
-    kids_penalty = 1 if "kids" in haystack or "repeat" in haystack else 0
-    murattal_bonus = 0 if "murattal" in haystack else 1
-    return (kids_penalty, murattal_bonus, reciter.english_name.casefold())
-
-
 def _select_background(settings, state: AutomationState) -> tuple[Path, str, AutomationState]:
     backgrounds = list_backgrounds()
     if backgrounds:
@@ -500,8 +346,25 @@ def _finish_pending_post_upload(
     state.playlist_ids[pending.reciter_key] = playlist_id
     youtube.add_to_playlist(playlist_id, pending.video_id)
     youtube.verify_video(pending.video_id)
+    surah_id = pending.surah_id
+    if surah_id is None:
+        # Old checkpoints predate the explicit surah field; the unconsumed queue
+        # still starts with the uploaded candidate.
+        if not state.surah_queue:
+            raise RuntimeError("cannot recover legacy upload without its surah queue")
+        surah_id = state.surah_queue[0]
     state.pending_post_upload = None
-    store.save(state)
+    store.mark_success(
+        state,
+        surah_id,
+        {
+            "surah": surah_id,
+            "reciter": pending.reciter_key,
+            "video": f"https://www.youtube.com/watch?v={pending.video_id}",
+            "background": pending.background_id,
+        },
+        pending.background_id,
+    )
 
 
 async def _send_failure(settings, context: dict[str, str], error: Exception) -> None:

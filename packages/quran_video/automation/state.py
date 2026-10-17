@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import secrets
+from datetime import UTC, datetime
 from pathlib import Path
 
 from quran_video.models import AutomationState
@@ -74,6 +75,10 @@ class AutomationStateStore:
         payload: dict[str, object],
         background_id: str | None = None,
     ) -> AutomationState:
+        if state.active_reciter_key:
+            key = f"{state.active_reciter_key}|{surah_id}"
+            if key not in state.completed_reciter_surahs:
+                state.completed_reciter_surahs.append(key)
         if state.surah_queue and state.surah_queue[0] == surah_id:
             state.surah_queue.pop(0)
         else:
@@ -85,6 +90,7 @@ class AutomationStateStore:
                 state.background_queue = [
                     item for item in state.background_queue if item != background_id
                 ]
+        state.last_success_at = datetime.now(UTC).isoformat()
         state.last_success = payload
         state.recent_failures = []
         self.save(state)
