@@ -320,7 +320,53 @@
     "168:kids-repeat": "PLVIBB4rTmtn8",
     "5:murattal": "PLe-r7Q5Q1EWw"
   },
-  "pending_post_upload": null,
+  "pending_post_upload": {
+    "surah_id": 1,
+    "background_id": "14737.jpg",
+    "video_id": null,
+    "pair_key": "sudais|1",
+    "thumbnail_path": "/home/runner/work/QuranAPIv4/QuranAPIv4/renders/automation/thumbnail.jpg",
+    "reciter_key": "3:murattal",
+    "metadata": {
+      "title": "Surah Al-Fatihah | as-Sudais | Arabic & English Subtitles | سورة الفاتحة Abdur-Rahman as-Sudais",
+      "description": "سورة الفاتحة بصوت القارئ Abdur-Rahman as-Sudais\nالآيات 1–7\n\nSurah Al-Fatihah, recited by Abdur-Rahman as-Sudais\nAyahs 1–7\n\nاستمع إلى تلاوة القرآن الكريم مع النص العربي المتزامن، معاني الكلمات باللغة الإنجليزية، وترجمة معاني القرآن باللغة الإنجليزية.\n\nListen to the Quran with synchronized Arabic text, word-by-word English meanings, and the Saheeh International translation of the meanings.\n\npeaceful Quran recitation with Arabic and English subtitles for reflection, focus, and calm listening.\nbeautiful Quran recitation / quran tilawat relaxing for daily listening, study, and sleep.\n\nاللهم اجعل القرآن ربيع قلوبنا ونور صدورنا وذهاب همومنا.\n\nالقارئ | Reciter: Abdur-Rahman as-Sudais | Abdur-Rahman as-Sudais\nالرواية | Recitation/Rewaya: Murattal\nالسورة | Surah: الفاتحة | Al-Fatihah\nالآيات | Ayahs: 1–7\nالنص العربي | Arabic text: Uthmani script\nالترجمة الإنجليزية | English translation: Saheeh International\n\nمصدر النص العربي والترجمة الإنجليزية وتوقيت الآيات والكلمات: Quran.Foundation Content API\nArabic Quran text, Saheeh International translation, ayah timing, and word timing source: Quran.Foundation Content API\n\nمصدر التلاوة | Audio recitation source: Quran.Foundation Content API\nReciter: Abdur-Rahman as-Sudais\nRecitation/Rewaya: Murattal\nالخلفية مقدمة من صاحب القناة | Background media provided by the channel owner\n\n#Quran #القرآن_الكريم #Al_Fatihah #الفاتحة #Abdur_Rahman_as_Sudais #Abdur_Rahman_as_Sudais\n#QuranRecitation #PeacefulQuran #BeautifulQuranRecitation #SurahAl_Fatihah\n\n[quran-video-pair:sudais|1]",
+      "tags": [
+        "Al-Fatihah",
+        "Surah Al-Fatihah",
+        "Surat Al-Fatihah",
+        "الفاتحة",
+        "سورة الفاتحة",
+        "Abdur-Rahman as-Sudais",
+        "AbdurRahman asSudais",
+        "as Sudais",
+        "Abdur Rahman",
+        "Quran",
+        "Quran recitation",
+        "Quran recitation for sleep",
+        "peaceful Quran recitation",
+        "beautiful Quran recitation",
+        "quran tilawat relaxing",
+        "relaxing Quran recitation",
+        "Holy Quran",
+        "القرآن الكريم",
+        "تلاوة القرآن",
+        "full surah",
+        "Quran with English subtitles",
+        "Quran English translation",
+        "Quran word by word"
+      ],
+      "hashtags": [
+        "#Quran",
+        "#القرآن_الكريم",
+        "#Al_Fatihah",
+        "#الفاتحة"
+      ],
+      "thumbnail_text_arabic": "سورة الفاتحة | Abdur-Rahman as-Sudais",
+      "thumbnail_text_english": "Surah Al-Fatihah | Abdur-Rahman as-Sudais",
+      "playlist_title": "Abdur-Rahman as-Sudais | Abdur-Rahman as-Sudais Quran Recitations",
+      "playlist_description": "Quran recitations by Abdur-Rahman as-Sudais | تلاوات القرآن الكريم بصوت Abdur-Rahman as-Sudais"
+    }
+  },
   "last_success_at": "2026-10-16T21:44:47+00:00",
   "last_success": {
     "surah": 20,
