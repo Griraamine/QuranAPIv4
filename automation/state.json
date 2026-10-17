@@ -22,6 +22,7 @@
   ],
   "active_reciter_key": "sudais",
   "completed_reciter_surahs": [
+    "alafasy|20",
     "minshawi|1",
     "minshawi|10",
     "minshawi|101",
@@ -135,7 +136,8 @@
     "minshawi|97",
     "minshawi|98",
     "minshawi|99",
-    "rifai|20"
+    "rifai|20",
+    "tunaiji|20"
   ],
   "skipped_reciter_surahs": {},
   "surah_queue": [
