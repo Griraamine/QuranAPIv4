@@ -96,7 +96,11 @@ async def _run(settings, context: dict[str, str]) -> int:
         _log_step("recovering post-upload checkpoint", video_id=state.pending_post_upload.video_id)
         if youtube is None:
             raise RuntimeError("YouTube authorization preflight did not initialize a client")
+        recovered_metadata = YouTubeMetadata.model_validate(state.pending_post_upload.metadata)
+        context["surah"] = str(state.pending_post_upload.surah_id or "unknown")
+        context["reciter"] = state.pending_post_upload.reciter_key
         _finish_pending_post_upload(youtube, store, state)
+        await _notify_recovered_upload(settings, state, recovered_metadata)
         _log_step("recovered existing upload; next render waits for the next interval")
         return 0
     repository = QuranRepository(settings)
@@ -258,8 +262,14 @@ async def _run(settings, context: dict[str, str]) -> int:
         _log_step("setting YouTube thumbnail", thumbnail=str(output.thumbnail_path))
         youtube.set_thumbnail(video_id, output.thumbnail_path)
         _log_step("finding or creating YouTube playlist", playlist=metadata.playlist_title)
-        playlist_id = youtube.find_or_create_playlist(metadata, state.playlist_ids.get(reciter_key))
+        playlist_key = state.active_reciter_key or reciter_key
+        playlist_id = youtube.find_or_create_playlist(
+            metadata,
+            state.playlist_ids.get(playlist_key) or state.playlist_ids.get(reciter_key),
+        )
+        state.playlist_ids[playlist_key] = playlist_id
         state.playlist_ids[reciter_key] = playlist_id
+        store.save(state)
         _log_step("adding video to playlist", playlist_id=playlist_id, video_id=video_id)
         youtube.add_to_playlist(playlist_id, video_id)
         actual_status = youtube.verify_video(video_id).get("privacyStatus", "unknown")
@@ -398,11 +408,18 @@ def _finish_pending_post_upload(
     thumbnail_path = Path(pending.thumbnail_path)
     if thumbnail_path.is_file():
         youtube.set_thumbnail(pending.video_id, thumbnail_path)
+    playlist_key = (
+        pending.pair_key.split("|", 1)[0]
+        if pending.pair_key
+        else state.active_reciter_key or pending.reciter_key
+    )
     playlist_id = youtube.find_or_create_playlist(
         metadata,
-        state.playlist_ids.get(pending.reciter_key),
+        state.playlist_ids.get(playlist_key) or state.playlist_ids.get(pending.reciter_key),
     )
+    state.playlist_ids[playlist_key] = playlist_id
     state.playlist_ids[pending.reciter_key] = playlist_id
+    store.save(state)
     youtube.add_to_playlist(playlist_id, pending.video_id)
     youtube.verify_video(pending.video_id)
     surah_id = pending.surah_id
@@ -424,6 +441,26 @@ def _finish_pending_post_upload(
         },
         pending.background_id,
     )
+
+
+async def _notify_recovered_upload(
+    settings, state: AutomationState, metadata: YouTubeMetadata
+) -> None:
+    if not settings.telegram_bot_token or not settings.telegram_chat_id:
+        return
+    video_url = (state.last_success or {}).get("video", "unknown")
+    try:
+        await TelegramClient(settings.telegram_bot_token, settings.telegram_chat_id).send_message(
+            "Quran upload recovery completed\n\n"
+            f"Video: {metadata.title}\nURL: {video_url}\nPlaylist: {metadata.playlist_title}\n"
+            f"Workflow: {os.getenv('GITHUB_RUN_URL', 'local')}"
+        )
+    except Exception as error:
+        # The upload and playlist are already complete; a notification outage
+        # must not turn that successful recovery into another upload-failure alert.
+        LOGGER.warning(
+            "recovery completed but Telegram notification failed: %s", _safe_error(settings, error)
+        )
 
 
 async def _send_failure(settings, context: dict[str, str], error: Exception) -> None:

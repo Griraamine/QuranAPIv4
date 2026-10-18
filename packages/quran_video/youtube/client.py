@@ -197,31 +197,55 @@ class YouTubeClient:
         return created["id"]
 
     def add_to_playlist(self, playlist_id: str, video_id: str) -> None:
-        existing = (
-            self.service.playlistItems()
-            .list(
-                part="id",
-                playlistId=playlist_id,
-                videoId=video_id,
-                maxResults=1,
-            )
-            .execute()
-        )
-        if existing.get("items"):
-            return
-        try:
-            self.service.playlistItems().insert(
-                part="snippet",
-                body={
-                    "snippet": {
-                        "playlistId": playlist_id,
-                        "resourceId": {"kind": "youtube#video", "videoId": video_id},
-                    }
-                },
-            ).execute()
-        except HttpError as error:
-            if "duplicate" not in str(error).casefold() and "already" not in str(error).casefold():
-                raise
+        for attempt in range(5):
+            try:
+                # Recheck on every attempt: an insert may have succeeded even
+                # when its response was lost. Never create another playlist here.
+                existing = (
+                    self.service.playlistItems()
+                    .list(
+                        part="id",
+                        playlistId=playlist_id,
+                        videoId=video_id,
+                        maxResults=1,
+                    )
+                    .execute()
+                )
+                if existing.get("items"):
+                    return
+                self.service.playlistItems().insert(
+                    part="snippet",
+                    body={
+                        "snippet": {
+                            "playlistId": playlist_id,
+                            "resourceId": {"kind": "youtube#video", "videoId": video_id},
+                        }
+                    },
+                ).execute()
+                return
+            except (HttpError, OSError) as error:
+                status = getattr(getattr(error, "resp", None), "status", None)
+                message = str(error).casefold()
+                if isinstance(error, HttpError) and (
+                    "duplicate" in message or "already" in message
+                ):
+                    return
+                temporary = (
+                    isinstance(error, OSError)
+                    or status in {409, 429, 500, 502, 503, 504}
+                    or (
+                        status == 404
+                        and ("playlistnotfound" in message or "videonotfound" in message)
+                    )
+                )
+                if not temporary or attempt == 4:
+                    raise
+                LOGGER.warning(
+                    "YouTube playlist operation temporarily unavailable; retry %s/4 | status=%s",
+                    attempt + 1,
+                    status,
+                )
+                time.sleep(2**attempt)
 
     def verify_video(self, video_id: str) -> dict[str, Any]:
         response = self.service.videos().list(part="status", id=video_id).execute()
