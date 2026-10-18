@@ -5,6 +5,7 @@ from typing import Any
 
 import regex
 
+from quran_video.config.reciters import resolve_reciter_name
 from quran_video.models import Chapter, ChapterReciter, YouTubeMetadata
 from quran_video.quran.text import normalize_lookup_text, remove_arabic_diacritics
 
@@ -65,6 +66,7 @@ def pack_tags(candidates: list[str], limit: int = 450) -> list[str]:
 
 
 def generate_title(chapter: Chapter, reciter: ChapterReciter) -> str:
+    reciter = resolve_reciter_name(reciter)
     short_reciter = _short_english_reciter(reciter.english_name)
     arabic_reciter = _arabic_reciter_name(reciter)
     title = (
@@ -79,14 +81,25 @@ def generate_title(chapter: Chapter, reciter: ChapterReciter) -> str:
     )
     if len(regex.findall(r"\X", bilingual_compact)) <= 100:
         return bilingual_compact
-    compact = f"Surah {chapter.english_name} | {reciter.english_name} | Arabic & English Subtitles"
-    if len(regex.findall(r"\X", compact)) <= 100:
-        return compact
-    graphemes = regex.findall(r"\X", compact)
-    return "".join(graphemes[:100])
+    # Keep both languages when names are too long for the subtitle descriptor.
+    for english_name in (reciter.english_name, short_reciter):
+        compact = (
+            f"Surah {chapter.english_name} | {english_name} | "
+            f"سورة {chapter.arabic_name} | {arabic_reciter}"
+        )
+        if len(regex.findall(r"\X", compact)) <= 100:
+            return compact
+    # Extremely long custom names still retain every bilingual component.
+    parts = [chapter.english_name, short_reciter, chapter.arabic_name, arabic_reciter]
+    while len(regex.findall(r"\X", " | ".join(parts))) > 100:
+        index = max(range(len(parts)), key=lambda i: len(regex.findall(r"\X", parts[i])))
+        parts[index] = "".join(regex.findall(r"\X", parts[index])[:-1]).rstrip()
+    return " | ".join(parts)
 
 
 def _short_english_reciter(name: str) -> str:
+    name = regex.sub(r"\([^)]*\)", "", name).strip()
+    name = regex.sub(r"\s+(?:-\s*)?(?:beta|streaming)$", "", name, flags=regex.IGNORECASE).strip()
     tokens = [token for token in regex.split(r"\s+", name.strip()) if token]
     for token in reversed(tokens):
         if token.casefold().startswith("al"):
@@ -127,6 +140,7 @@ def generate_metadata(
     ayah_from: int,
     ayah_to: int,
 ) -> YouTubeMetadata:
+    reciter = resolve_reciter_name(reciter)
     english_surah = chapter.english_name
     arabic_surah = chapter.arabic_name
     english_reciter = reciter.english_name

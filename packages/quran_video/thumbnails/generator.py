@@ -6,6 +6,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
+from quran_video.config.reciters import contains_arabic, resolve_reciter_name
 from quran_video.models import RenderRequest, RenderTimeline
 from quran_video.quran.artistic_names import surah_artistic_name
 from quran_video.rendering.fonts import (
@@ -41,9 +42,14 @@ def generate_thumbnail(
             request.typography.english_font_key, fonts.english, italic=True
         )
         arabic_surah = request.badge.arabic_surah or timeline.chapter.arabic_name
-        arabic_reciter = request.badge.arabic_reciter or timeline.reciter.arabic_name
+        reciter = resolve_reciter_name(timeline.reciter)
+        arabic_reciter = (
+            request.badge.arabic_reciter
+            if contains_arabic(request.badge.arabic_reciter)
+            else reciter.arabic_name
+        )
         english_surah = request.badge.english_surah or timeline.chapter.english_name
-        english_reciter = request.badge.english_reciter or timeline.reciter.english_name
+        english_reciter = request.badge.english_reciter or reciter.english_name
         arabic_text = (
             f"سورة {surah_artistic_name(request.chapter_id, arabic_surah)} | {arabic_reciter}"
         )

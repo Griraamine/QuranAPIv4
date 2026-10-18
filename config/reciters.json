@@ -1,12 +1,111 @@
-[
-  {
-    "reciter_id": "1",
-    "reciter_english_name": "Ibrahim Al-Akdar",
-    "reciter_arabic_name": "إبراهيم الأخضر"
-  },
-  {
-    "reciter_id": "9",
-    "reciter_english_name": "Al-Minshawi",
-    "reciter_arabic_name": "المنشاوي"
-  }
-]
+{
+  "source_url": "https://quran.com/ar/reciters",
+  "checked_at": "2026-10-18",
+  "reciters": [
+    {
+      "reciter_id": "1",
+      "reciter_english_name": "Ibrahim Al-Akdar",
+      "reciter_arabic_name": "إبراهيم الأخضر"
+    },
+    {
+      "reciter_id": "9",
+      "reciter_english_name": "Al-Minshawi",
+      "reciter_arabic_name": "المنشاوي"
+    },
+    {
+      "reciter_id": "2",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "عبد الباسط عبد الصمد"
+    },
+    {
+      "reciter_id": "158",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "عبد الله علي جابر"
+    },
+    {
+      "reciter_id": "3",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "عبد الرحمن السديس"
+    },
+    {
+      "reciter_id": "4",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "أبو بكر الشاطري"
+    },
+    {
+      "reciter_id": "19",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "أحمد بن علي العجمي"
+    },
+    {
+      "reciter_id": "160",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "بندر بليلة"
+    },
+    {
+      "reciter_id": "5",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "هاني الرفاعي"
+    },
+    {
+      "reciter_id": "161",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "خليفة الطنيجي"
+    },
+    {
+      "reciter_id": "159",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "ماهر المعيقلي"
+    },
+    {
+      "reciter_id": "6",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "محمود خليل الحصري"
+    },
+    {
+      "reciter_id": "7",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "مشاري راشد العفاسي"
+    },
+    {
+      "reciter_id": "13",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "سعد الغامدي"
+    },
+    {
+      "reciter_id": "10",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "سعود الشريم"
+    },
+    {
+      "reciter_id": "176",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "أحمد عبد الحميد طاحون"
+    },
+    {
+      "reciter_id": "175",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "عبد الله حمد أبو شريدة"
+    },
+    {
+      "reciter_id": "12",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "محمود خليل الحصري"
+    },
+    {
+      "reciter_id": "173",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "مشاري راشد العفاسي"
+    },
+    {
+      "reciter_id": "168",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "المنشاوي (ترديد أطفال)"
+    },
+    {
+      "reciter_id": "174",
+      "provider": "quranfoundation",
+      "reciter_arabic_name": "ياسر الدوسري"
+    }
+  ]
+}

@@ -18,6 +18,7 @@ from quran_video.automation.state import AutomationStateStore, choose_background
 from quran_video.backgrounds.release import download_random_release_background
 from quran_video.config import get_settings
 from quran_video.config.logging import redact_secret_text
+from quran_video.config.reciters import require_bilingual_reciter
 from quran_video.config.visual_style import load_visual_style
 from quran_video.metadata import generate_metadata
 from quran_video.models import (
@@ -130,7 +131,9 @@ async def _run(settings, context: dict[str, str]) -> int:
         arabic=chapter.arabic_name,
         ayahs=chapter.verse_count,
     )
-    render_reciter = await repository.reciter_for_request(reciter.id, selected_moshaf_id)
+    render_reciter = require_bilingual_reciter(
+        await repository.reciter_for_request(reciter.id, selected_moshaf_id)
+    )
     reciter_key = (
         f"{reciter.display_key}:{selected_moshaf_id}" if selected_moshaf_id else reciter.display_key
     )
@@ -191,8 +194,8 @@ async def _run(settings, context: dict[str, str]) -> int:
             enabled=True,
             arabic_surah=chapter.arabic_name,
             english_surah=chapter.english_name,
-            arabic_reciter=reciter.arabic_name,
-            english_reciter=reciter.english_name,
+            arabic_reciter=render_reciter.arabic_name,
+            english_reciter=render_reciter.english_name,
         ),
         data_mode=settings.quran_video_data_mode
         if settings.quran_video_data_mode in {"quranfoundation", "live", "alqurancloud", "mp3quran"}

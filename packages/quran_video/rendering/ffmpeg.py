@@ -15,7 +15,6 @@ from quran_video.models import BackgroundMode, RenderRequest, RenderResult, Rend
 from quran_video.rendering.fonts import resolve_fonts
 from quran_video.rendering.media import probe_media, safe_background_path
 from quran_video.subtitles.ass import generate_ass
-from quran_video.thumbnails.generator import generate_thumbnail
 
 OUTPUT_FRAME_RATE = 30
 
@@ -97,6 +96,9 @@ def render_video(
         raw_errors = validation.get("errors", [])
         errors = raw_errors if isinstance(raw_errors, list) else [raw_errors]
         raise RuntimeError("; ".join(str(error) for error in errors))
+    # Keep standalone thumbnail generation independent of the video renderer.
+    from quran_video.thumbnails.generator import generate_thumbnail
+
     generate_thumbnail(
         background_paths[0],
         thumbnail_path,
