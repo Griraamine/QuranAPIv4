@@ -326,7 +326,53 @@
     "minshawi": "PLGR6DlKSv1rE",
     "rifai": "PLe-r7Q5Q1EWw"
   },
-  "pending_post_upload": null,
+  "pending_post_upload": {
+    "surah_id": 15,
+    "background_id": "harsh-kumar-sQdaoBlGwxY-unsplash.jpg",
+    "video_id": null,
+    "pair_key": "sudais|15",
+    "thumbnail_path": "/home/runner/work/QuranAPIv4/QuranAPIv4/renders/automation/thumbnail.jpg",
+    "reciter_key": "3:murattal",
+    "metadata": {
+      "title": "Surah Al-Hijr | Abdur-Rahman as-Sudais | Arabic & English Subtitles | سورة الحجر عبد الرحمن السديس",
+      "description": "سورة الحجر بصوت القارئ عبد الرحمن السديس\nالآيات 1–99\n\nSurah Al-Hijr, recited by Abdur-Rahman as-Sudais\nAyahs 1–99\n\nاستمع إلى تلاوة القرآن الكريم مع النص العربي المتزامن، معاني الكلمات باللغة الإنجليزية، وترجمة معاني القرآن باللغة الإنجليزية.\n\nListen to the Quran with synchronized Arabic text, word-by-word English meanings, and the Saheeh International translation of the meanings.\n\npeaceful Quran recitation with Arabic and English subtitles for reflection, focus, and calm listening.\nbeautiful Quran recitation / quran tilawat relaxing for daily listening, study, and sleep.\n\nاللهم اجعل القرآن ربيع قلوبنا ونور صدورنا وذهاب همومنا.\n\nالقارئ | Reciter: عبد الرحمن السديس | Abdur-Rahman as-Sudais\nالرواية | Recitation/Rewaya: Murattal\nالسورة | Surah: الحجر | Al-Hijr\nالآيات | Ayahs: 1–99\nالنص العربي | Arabic text: Uthmani script\nالترجمة الإنجليزية | English translation: Saheeh International\n\nمصدر النص العربي والترجمة الإنجليزية وتوقيت الآيات والكلمات: Quran.Foundation Content API\nArabic Quran text, Saheeh International translation, ayah timing, and word timing source: Quran.Foundation Content API\n\nمصدر التلاوة | Audio recitation source: Quran.Foundation Content API\nReciter: Abdur-Rahman as-Sudais\nRecitation/Rewaya: Murattal\nالخلفية مقدمة من صاحب القناة | Background media provided by the channel owner\n\n#Quran #القرآن_الكريم #Al_Hijr #الحجر #Abdur_Rahman_as_Sudais #عبد_الرحمن_السديس\n#QuranRecitation #PeacefulQuran #BeautifulQuranRecitation #SurahAl_Hijr\n\n[quran-video-pair:sudais|15]",
+      "tags": [
+        "Al-Hijr",
+        "Surah Al-Hijr",
+        "Surat Al-Hijr",
+        "الحجر",
+        "سورة الحجر",
+        "Abdur-Rahman as-Sudais",
+        "عبد الرحمن السديس",
+        "AbdurRahman asSudais",
+        "Abdur Rahman",
+        "as Sudais",
+        "Quran",
+        "Quran recitation",
+        "Quran recitation for sleep",
+        "peaceful Quran recitation",
+        "beautiful Quran recitation",
+        "quran tilawat relaxing",
+        "relaxing Quran recitation",
+        "Holy Quran",
+        "القرآن الكريم",
+        "تلاوة القرآن",
+        "full surah",
+        "Quran with English subtitles",
+        "Quran English translation"
+      ],
+      "hashtags": [
+        "#Quran",
+        "#القرآن_الكريم",
+        "#Al_Hijr",
+        "#الحجر"
+      ],
+      "thumbnail_text_arabic": "سورة الحجر | عبد الرحمن السديس",
+      "thumbnail_text_english": "Surah Al-Hijr | Abdur-Rahman as-Sudais",
+      "playlist_title": "Abdur-Rahman as-Sudais | عبد الرحمن السديس Quran Recitations",
+      "playlist_description": "Quran recitations by Abdur-Rahman as-Sudais | تلاوات القرآن الكريم بصوت عبد الرحمن السديس"
+    }
+  },
   "last_success_at": "2026-10-19T13:53:39.745191+00:00",
   "last_success": {
     "surah": 70,
