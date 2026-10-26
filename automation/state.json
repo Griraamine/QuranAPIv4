@@ -147,11 +147,11 @@
     "sudais|48",
     "sudais|108",
     "sudais|11",
-    "sudais|36"
+    "sudais|36",
+    "sudais|83"
   ],
   "skipped_reciter_surahs": {},
   "surah_queue": [
-    83,
     20,
     99,
     47,
@@ -258,7 +258,6 @@
     104
   ],
   "background_queue": [
-    "kelly-sikkema-tk9RQCq5eQo-unsplash.jpg",
     "zoe-ikCCb-OQxsA-unsplash.jpg",
     "bryan-goff-RF4p4rTM-2s-unsplash.jpg",
     "33381.jpg",
@@ -320,58 +319,13 @@
     "minshawi": "PLGR6DlKSv1rE",
     "rifai": "PLe-r7Q5Q1EWw"
   },
-  "pending_post_upload": {
-    "surah_id": 83,
-    "background_id": "kelly-sikkema-tk9RQCq5eQo-unsplash.jpg",
-    "video_id": "-1gnlxE_ZWE",
-    "pair_key": "sudais|83",
-    "thumbnail_path": "/home/runner/work/QuranAPIv4/QuranAPIv4/renders/automation/thumbnail.jpg",
-    "reciter_key": "3:murattal",
-    "metadata": {
-      "title": "Surah Al-Mutaffifin | as-Sudais | Arabic & English Subtitles | سورة المطففين عبد الرحمن السديس",
-      "description": "سورة المطففين بصوت القارئ عبد الرحمن السديس\nالآيات 1–36\n\nSurah Al-Mutaffifin, recited by Abdur-Rahman as-Sudais\nAyahs 1–36\n\nاستمع إلى تلاوة القرآن الكريم مع النص العربي المتزامن، معاني الكلمات باللغة الإنجليزية، وترجمة معاني القرآن باللغة الإنجليزية.\n\nListen to the Quran with synchronized Arabic text, word-by-word English meanings, and the Saheeh International translation of the meanings.\n\npeaceful Quran recitation with Arabic and English subtitles for reflection, focus, and calm listening.\nbeautiful Quran recitation / quran tilawat relaxing for daily listening, study, and sleep.\n\nاللهم اجعل القرآن ربيع قلوبنا ونور صدورنا وذهاب همومنا.\n\nالقارئ | Reciter: عبد الرحمن السديس | Abdur-Rahman as-Sudais\nالرواية | Recitation/Rewaya: Murattal\nالسورة | Surah: المطففين | Al-Mutaffifin\nالآيات | Ayahs: 1–36\nالنص العربي | Arabic text: Uthmani script\nالترجمة الإنجليزية | English translation: Saheeh International\n\nمصدر النص العربي والترجمة الإنجليزية وتوقيت الآيات والكلمات: Quran.Foundation Content API\nArabic Quran text, Saheeh International translation, ayah timing, and word timing source: Quran.Foundation Content API\n\nمصدر التلاوة | Audio recitation source: Quran.Foundation Content API\nReciter: Abdur-Rahman as-Sudais\nRecitation/Rewaya: Murattal\nالخلفية مقدمة من صاحب القناة | Background media provided by the channel owner\n\n#Quran #القرآن_الكريم #Al_Mutaffifin #المطففين #Abdur_Rahman_as_Sudais #عبد_الرحمن_السديس\n#QuranRecitation #PeacefulQuran #BeautifulQuranRecitation #SurahAl_Mutaffifin\n\n[quran-video-pair:sudais|83]",
-      "tags": [
-        "Al-Mutaffifin",
-        "Surah Al-Mutaffifin",
-        "Surat Al-Mutaffifin",
-        "المطففين",
-        "سورة المطففين",
-        "Abdur-Rahman as-Sudais",
-        "عبد الرحمن السديس",
-        "as Sudais",
-        "Abdur Rahman",
-        "AbdurRahman asSudais",
-        "Quran",
-        "Quran recitation",
-        "Quran recitation for sleep",
-        "peaceful Quran recitation",
-        "beautiful Quran recitation",
-        "quran tilawat relaxing",
-        "relaxing Quran recitation",
-        "Holy Quran",
-        "القرآن الكريم",
-        "تلاوة القرآن",
-        "full surah",
-        "Quran with English subtitles"
-      ],
-      "hashtags": [
-        "#Quran",
-        "#القرآن_الكريم",
-        "#Al_Mutaffifin",
-        "#المطففين"
-      ],
-      "thumbnail_text_arabic": "سورة المطففين | عبد الرحمن السديس",
-      "thumbnail_text_english": "Surah Al-Mutaffifin | Abdur-Rahman as-Sudais",
-      "playlist_title": "Abdur-Rahman as-Sudais | عبد الرحمن السديس Quran Recitations",
-      "playlist_description": "Quran recitations by Abdur-Rahman as-Sudais | تلاوات القرآن الكريم بصوت عبد الرحمن السديس"
-    }
-  },
-  "last_success_at": "2026-10-25T12:00:30.960259+00:00",
+  "pending_post_upload": null,
+  "last_success_at": "2026-10-26T13:30:04.737455+00:00",
   "last_success": {
-    "surah": 36,
+    "surah": 83,
     "reciter": "3:murattal",
-    "video": "https://www.youtube.com/watch?v=cw_OqzJOprA",
-    "background": "33352.jpg"
+    "video": "https://www.youtube.com/watch?v=-1gnlxE_ZWE",
+    "background": "kelly-sikkema-tk9RQCq5eQo-unsplash.jpg"
   },
   "recent_failures": []
 }
