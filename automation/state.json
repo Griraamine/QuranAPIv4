@@ -319,7 +319,54 @@
     "minshawi": "PLGR6DlKSv1rE",
     "rifai": "PLe-r7Q5Q1EWw"
   },
-  "pending_post_upload": null,
+  "pending_post_upload": {
+    "surah_id": 20,
+    "background_id": "zoe-ikCCb-OQxsA-unsplash.jpg",
+    "video_id": null,
+    "pair_key": "sudais|20",
+    "thumbnail_path": "/home/runner/work/QuranAPIv4/QuranAPIv4/renders/automation/thumbnail.jpg",
+    "reciter_key": "3:murattal",
+    "metadata": {
+      "title": "Surah Taha | Abdur-Rahman as-Sudais | Arabic & English Subtitles | سورة طه عبد الرحمن السديس",
+      "description": "سورة طه بصوت القارئ عبد الرحمن السديس\nالآيات 1–135\n\nSurah Taha, recited by Abdur-Rahman as-Sudais\nAyahs 1–135\n\nاستمع إلى تلاوة القرآن الكريم مع النص العربي المتزامن، معاني الكلمات باللغة الإنجليزية، وترجمة معاني القرآن باللغة الإنجليزية.\n\nListen to the Quran with synchronized Arabic text, word-by-word English meanings, and the Saheeh International translation of the meanings.\n\npeaceful Quran recitation with Arabic and English subtitles for reflection, focus, and calm listening.\nbeautiful Quran recitation / quran tilawat relaxing for daily listening, study, and sleep.\n\nاللهم اجعل القرآن ربيع قلوبنا ونور صدورنا وذهاب همومنا.\n\nالقارئ | Reciter: عبد الرحمن السديس | Abdur-Rahman as-Sudais\nالرواية | Recitation/Rewaya: Murattal\nالسورة | Surah: طه | Taha\nالآيات | Ayahs: 1–135\nالنص العربي | Arabic text: Uthmani script\nالترجمة الإنجليزية | English translation: Saheeh International\n\nمصدر النص العربي والترجمة الإنجليزية وتوقيت الآيات والكلمات: Quran.Foundation Content API\nArabic Quran text, Saheeh International translation, ayah timing, and word timing source: Quran.Foundation Content API\n\nمصدر التلاوة | Audio recitation source: Quran.Foundation Content API\nReciter: Abdur-Rahman as-Sudais\nRecitation/Rewaya: Murattal\nالخلفية مقدمة من صاحب القناة | Background media provided by the channel owner\n\n#Quran #القرآن_الكريم #Taha #طه #Abdur_Rahman_as_Sudais #عبد_الرحمن_السديس\n#QuranRecitation #PeacefulQuran #BeautifulQuranRecitation #SurahTaha\n\n[quran-video-pair:sudais|20]",
+      "tags": [
+        "Taha",
+        "Surah Taha",
+        "Surat Taha",
+        "طه",
+        "سورة طه",
+        "Abdur-Rahman as-Sudais",
+        "عبد الرحمن السديس",
+        "Abdur Rahman",
+        "AbdurRahman asSudais",
+        "as Sudais",
+        "Quran",
+        "Quran recitation",
+        "Quran recitation for sleep",
+        "peaceful Quran recitation",
+        "beautiful Quran recitation",
+        "quran tilawat relaxing",
+        "relaxing Quran recitation",
+        "Holy Quran",
+        "القرآن الكريم",
+        "تلاوة القرآن",
+        "full surah",
+        "Quran with English subtitles",
+        "Quran English translation",
+        "Quran word by word"
+      ],
+      "hashtags": [
+        "#Quran",
+        "#القرآن_الكريم",
+        "#Taha",
+        "#طه"
+      ],
+      "thumbnail_text_arabic": "سورة طه | عبد الرحمن السديس",
+      "thumbnail_text_english": "Surah Taha | Abdur-Rahman as-Sudais",
+      "playlist_title": "Abdur-Rahman as-Sudais | عبد الرحمن السديس Quran Recitations",
+      "playlist_description": "Quran recitations by Abdur-Rahman as-Sudais | تلاوات القرآن الكريم بصوت عبد الرحمن السديس"
+    }
+  },
   "last_success_at": "2026-10-26T13:30:04.737455+00:00",
   "last_success": {
     "surah": 83,
