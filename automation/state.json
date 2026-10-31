@@ -314,7 +314,52 @@
     "minshawi": "PLGR6DlKSv1rE",
     "rifai": "PLe-r7Q5Q1EWw"
   },
-  "pending_post_upload": null,
+  "pending_post_upload": {
+    "surah_id": 29,
+    "background_id": "2181738.jpg",
+    "video_id": null,
+    "pair_key": "sudais|29",
+    "thumbnail_path": "/home/runner/work/QuranAPIv4/QuranAPIv4/renders/automation/thumbnail.jpg",
+    "reciter_key": "3:murattal",
+    "metadata": {
+      "title": "Surah Al-'Ankabut | as-Sudais | Arabic & English Subtitles | سورة العنكبوت عبد الرحمن السديس",
+      "description": "سورة العنكبوت بصوت القارئ عبد الرحمن السديس\nالآيات 1–69\n\nSurah Al-'Ankabut, recited by Abdur-Rahman as-Sudais\nAyahs 1–69\n\nاستمع إلى تلاوة القرآن الكريم مع النص العربي المتزامن، معاني الكلمات باللغة الإنجليزية، وترجمة معاني القرآن باللغة الإنجليزية.\n\nListen to the Quran with synchronized Arabic text, word-by-word English meanings, and the Saheeh International translation of the meanings.\n\npeaceful Quran recitation with Arabic and English subtitles for reflection, focus, and calm listening.\nbeautiful Quran recitation / quran tilawat relaxing for daily listening, study, and sleep.\n\nاللهم اجعل القرآن ربيع قلوبنا ونور صدورنا وذهاب همومنا.\n\nالقارئ | Reciter: عبد الرحمن السديس | Abdur-Rahman as-Sudais\nالرواية | Recitation/Rewaya: Murattal\nالسورة | Surah: العنكبوت | Al-'Ankabut\nالآيات | Ayahs: 1–69\nالنص العربي | Arabic text: Uthmani script\nالترجمة الإنجليزية | English translation: Saheeh International\n\nمصدر النص العربي والترجمة الإنجليزية وتوقيت الآيات والكلمات: Quran.Foundation Content API\nArabic Quran text, Saheeh International translation, ayah timing, and word timing source: Quran.Foundation Content API\n\nمصدر التلاوة | Audio recitation source: Quran.Foundation Content API\nReciter: Abdur-Rahman as-Sudais\nRecitation/Rewaya: Murattal\nالخلفية مقدمة من صاحب القناة | Background media provided by the channel owner\n\n#Quran #القرآن_الكريم #Al_Ankabut #العنكبوت #Abdur_Rahman_as_Sudais #عبد_الرحمن_السديس\n#QuranRecitation #PeacefulQuran #BeautifulQuranRecitation #SurahAl_Ankabut\n\n[quran-video-pair:sudais|29]",
+      "tags": [
+        "Al-'Ankabut",
+        "Surah Al-'Ankabut",
+        "Surat Al-'Ankabut",
+        "العنكبوت",
+        "سورة العنكبوت",
+        "Abdur-Rahman as-Sudais",
+        "عبد الرحمن السديس",
+        "as Sudais",
+        "AbdurRahman asSudais",
+        "Abdur Rahman",
+        "Quran",
+        "Quran recitation",
+        "Quran recitation for sleep",
+        "peaceful Quran recitation",
+        "beautiful Quran recitation",
+        "quran tilawat relaxing",
+        "relaxing Quran recitation",
+        "Holy Quran",
+        "القرآن الكريم",
+        "تلاوة القرآن",
+        "full surah",
+        "Quran with English subtitles"
+      ],
+      "hashtags": [
+        "#Quran",
+        "#القرآن_الكريم",
+        "#Al_Ankabut",
+        "#العنكبوت"
+      ],
+      "thumbnail_text_arabic": "سورة العنكبوت | عبد الرحمن السديس",
+      "thumbnail_text_english": "Surah Al-'Ankabut | Abdur-Rahman as-Sudais",
+      "playlist_title": "Abdur-Rahman as-Sudais | عبد الرحمن السديس Quran Recitations",
+      "playlist_description": "Quran recitations by Abdur-Rahman as-Sudais | تلاوات القرآن الكريم بصوت عبد الرحمن السديس"
+    }
+  },
   "last_success_at": "2026-10-30T22:45:04.454170+00:00",
   "last_success": {
     "surah": 18,
