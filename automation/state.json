@@ -157,11 +157,11 @@
     "sudais|29",
     "sudais|84",
     "sudais|49",
-    "sudais|28"
+    "sudais|28",
+    "sudais|73"
   ],
   "skipped_reciter_surahs": {},
   "surah_queue": [
-    73,
     61,
     113,
     111,
@@ -258,7 +258,6 @@
     104
   ],
   "background_queue": [
-    "abhishek-koli-PMxTK-bHZhs-unsplash.jpg",
     "ali-arif-soydas-uwzPks8CE3k-unsplash.jpg",
     "33335.jpg",
     "sample-fixture-background.jpg",
@@ -310,58 +309,13 @@
     "minshawi": "PLGR6DlKSv1rE",
     "rifai": "PLe-r7Q5Q1EWw"
   },
-  "pending_post_upload": {
-    "surah_id": 73,
-    "background_id": "abhishek-koli-PMxTK-bHZhs-unsplash.jpg",
-    "video_id": "ciW3ViJTwpY",
-    "pair_key": "sudais|73",
-    "thumbnail_path": "/home/runner/work/QuranAPIv4/QuranAPIv4/renders/automation/thumbnail.jpg",
-    "reciter_key": "3:murattal",
-    "metadata": {
-      "title": "Surah Al-Muzzammil | as-Sudais | Arabic & English Subtitles | سورة المزمل عبد الرحمن السديس",
-      "description": "سورة المزمل بصوت القارئ عبد الرحمن السديس\nالآيات 1–20\n\nSurah Al-Muzzammil, recited by Abdur-Rahman as-Sudais\nAyahs 1–20\n\nاستمع إلى تلاوة القرآن الكريم مع النص العربي المتزامن، معاني الكلمات باللغة الإنجليزية، وترجمة معاني القرآن باللغة الإنجليزية.\n\nListen to the Quran with synchronized Arabic text, word-by-word English meanings, and the Saheeh International translation of the meanings.\n\npeaceful Quran recitation with Arabic and English subtitles for reflection, focus, and calm listening.\nbeautiful Quran recitation / quran tilawat relaxing for daily listening, study, and sleep.\n\nاللهم اجعل القرآن ربيع قلوبنا ونور صدورنا وذهاب همومنا.\n\nالقارئ | Reciter: عبد الرحمن السديس | Abdur-Rahman as-Sudais\nالرواية | Recitation/Rewaya: Murattal\nالسورة | Surah: المزمل | Al-Muzzammil\nالآيات | Ayahs: 1–20\nالنص العربي | Arabic text: Uthmani script\nالترجمة الإنجليزية | English translation: Saheeh International\n\nمصدر النص العربي والترجمة الإنجليزية وتوقيت الآيات والكلمات: Quran.Foundation Content API\nArabic Quran text, Saheeh International translation, ayah timing, and word timing source: Quran.Foundation Content API\n\nمصدر التلاوة | Audio recitation source: Quran.Foundation Content API\nReciter: Abdur-Rahman as-Sudais\nRecitation/Rewaya: Murattal\nالخلفية مقدمة من صاحب القناة | Background media provided by the channel owner\n\n#Quran #القرآن_الكريم #Al_Muzzammil #المزمل #Abdur_Rahman_as_Sudais #عبد_الرحمن_السديس\n#QuranRecitation #PeacefulQuran #BeautifulQuranRecitation #SurahAl_Muzzammil\n\n[quran-video-pair:sudais|73]",
-      "tags": [
-        "Al-Muzzammil",
-        "Surah Al-Muzzammil",
-        "Surat Al-Muzzammil",
-        "المزمل",
-        "سورة المزمل",
-        "Abdur-Rahman as-Sudais",
-        "عبد الرحمن السديس",
-        "as Sudais",
-        "AbdurRahman asSudais",
-        "Abdur Rahman",
-        "Quran",
-        "Quran recitation",
-        "Quran recitation for sleep",
-        "peaceful Quran recitation",
-        "beautiful Quran recitation",
-        "quran tilawat relaxing",
-        "relaxing Quran recitation",
-        "Holy Quran",
-        "القرآن الكريم",
-        "تلاوة القرآن",
-        "full surah",
-        "Quran with English subtitles"
-      ],
-      "hashtags": [
-        "#Quran",
-        "#القرآن_الكريم",
-        "#Al_Muzzammil",
-        "#المزمل"
-      ],
-      "thumbnail_text_arabic": "سورة المزمل | عبد الرحمن السديس",
-      "thumbnail_text_english": "Surah Al-Muzzammil | Abdur-Rahman as-Sudais",
-      "playlist_title": "Abdur-Rahman as-Sudais | عبد الرحمن السديس Quran Recitations",
-      "playlist_description": "Quran recitations by Abdur-Rahman as-Sudais | تلاوات القرآن الكريم بصوت عبد الرحمن السديس"
-    }
-  },
-  "last_success_at": "2026-11-03T19:52:24.747858+00:00",
+  "pending_post_upload": null,
+  "last_success_at": "2026-11-04T20:01:05.199224+00:00",
   "last_success": {
-    "surah": 28,
+    "surah": 73,
     "reciter": "3:murattal",
-    "video": "https://www.youtube.com/watch?v=6pgw5bqu0Rw",
-    "background": "kevin-laminto-h2VrZPWLhIU-unsplash.jpg"
+    "video": "https://www.youtube.com/watch?v=ciW3ViJTwpY",
+    "background": "abhishek-koli-PMxTK-bHZhs-unsplash.jpg"
   },
   "recent_failures": []
 }
