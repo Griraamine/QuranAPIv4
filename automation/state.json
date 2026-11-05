@@ -158,11 +158,11 @@
     "sudais|84",
     "sudais|49",
     "sudais|28",
-    "sudais|73"
+    "sudais|73",
+    "sudais|61"
   ],
   "skipped_reciter_surahs": {},
   "surah_queue": [
-    61,
     113,
     111,
     78,
@@ -258,7 +258,6 @@
     104
   ],
   "background_queue": [
-    "ali-arif-soydas-uwzPks8CE3k-unsplash.jpg",
     "33335.jpg",
     "sample-fixture-background.jpg",
     "simon-wilkes-S297j2CsdlM-unsplash.jpg",
@@ -309,60 +308,13 @@
     "minshawi": "PLGR6DlKSv1rE",
     "rifai": "PLe-r7Q5Q1EWw"
   },
-  "pending_post_upload": {
-    "surah_id": 61,
-    "background_id": "ali-arif-soydas-uwzPks8CE3k-unsplash.jpg",
-    "video_id": "yhyzgzvkprM",
-    "pair_key": "sudais|61",
-    "thumbnail_path": "/home/runner/work/QuranAPIv4/QuranAPIv4/renders/automation/thumbnail.jpg",
-    "reciter_key": "3:murattal",
-    "metadata": {
-      "title": "Surah As-Saf | Abdur-Rahman as-Sudais | Arabic & English Subtitles | سورة الصف عبد الرحمن السديس",
-      "description": "سورة الصف بصوت القارئ عبد الرحمن السديس\nالآيات 1–14\n\nSurah As-Saf, recited by Abdur-Rahman as-Sudais\nAyahs 1–14\n\nاستمع إلى تلاوة القرآن الكريم مع النص العربي المتزامن، معاني الكلمات باللغة الإنجليزية، وترجمة معاني القرآن باللغة الإنجليزية.\n\nListen to the Quran with synchronized Arabic text, word-by-word English meanings, and the Saheeh International translation of the meanings.\n\npeaceful Quran recitation with Arabic and English subtitles for reflection, focus, and calm listening.\nbeautiful Quran recitation / quran tilawat relaxing for daily listening, study, and sleep.\n\nاللهم اجعل القرآن ربيع قلوبنا ونور صدورنا وذهاب همومنا.\n\nالقارئ | Reciter: عبد الرحمن السديس | Abdur-Rahman as-Sudais\nالرواية | Recitation/Rewaya: Murattal\nالسورة | Surah: الصف | As-Saf\nالآيات | Ayahs: 1–14\nالنص العربي | Arabic text: Uthmani script\nالترجمة الإنجليزية | English translation: Saheeh International\n\nمصدر النص العربي والترجمة الإنجليزية وتوقيت الآيات والكلمات: Quran.Foundation Content API\nArabic Quran text, Saheeh International translation, ayah timing, and word timing source: Quran.Foundation Content API\n\nمصدر التلاوة | Audio recitation source: Quran.Foundation Content API\nReciter: Abdur-Rahman as-Sudais\nRecitation/Rewaya: Murattal\nالخلفية مقدمة من صاحب القناة | Background media provided by the channel owner\n\n#Quran #القرآن_الكريم #As_Saf #الصف #Abdur_Rahman_as_Sudais #عبد_الرحمن_السديس\n#QuranRecitation #PeacefulQuran #BeautifulQuranRecitation #SurahAs_Saf\n\n[quran-video-pair:sudais|61]",
-      "tags": [
-        "As-Saf",
-        "Surah As-Saf",
-        "Surat As-Saf",
-        "الصف",
-        "سورة الصف",
-        "Abdur-Rahman as-Sudais",
-        "عبد الرحمن السديس",
-        "AbdurRahman asSudais",
-        "as Sudais",
-        "Abdur Rahman",
-        "Quran",
-        "Quran recitation",
-        "Quran recitation for sleep",
-        "peaceful Quran recitation",
-        "beautiful Quran recitation",
-        "quran tilawat relaxing",
-        "relaxing Quran recitation",
-        "Holy Quran",
-        "القرآن الكريم",
-        "تلاوة القرآن",
-        "full surah",
-        "Quran with English subtitles",
-        "Quran English translation",
-        "As-Saf full"
-      ],
-      "hashtags": [
-        "#Quran",
-        "#القرآن_الكريم",
-        "#As_Saf",
-        "#الصف"
-      ],
-      "thumbnail_text_arabic": "سورة الصف | عبد الرحمن السديس",
-      "thumbnail_text_english": "Surah As-Saf | Abdur-Rahman as-Sudais",
-      "playlist_title": "Abdur-Rahman as-Sudais | عبد الرحمن السديس Quran Recitations",
-      "playlist_description": "Quran recitations by Abdur-Rahman as-Sudais | تلاوات القرآن الكريم بصوت عبد الرحمن السديس"
-    }
-  },
-  "last_success_at": "2026-11-04T20:01:05.199224+00:00",
+  "pending_post_upload": null,
+  "last_success_at": "2026-11-05T20:16:15.750715+00:00",
   "last_success": {
-    "surah": 73,
+    "surah": 61,
     "reciter": "3:murattal",
-    "video": "https://www.youtube.com/watch?v=ciW3ViJTwpY",
-    "background": "abhishek-koli-PMxTK-bHZhs-unsplash.jpg"
+    "video": "https://www.youtube.com/watch?v=yhyzgzvkprM",
+    "background": "ali-arif-soydas-uwzPks8CE3k-unsplash.jpg"
   },
   "recent_failures": []
 }
