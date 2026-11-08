@@ -306,7 +306,53 @@
     "minshawi": "PLGR6DlKSv1rE",
     "rifai": "PLe-r7Q5Q1EWw"
   },
-  "pending_post_upload": null,
+  "pending_post_upload": {
+    "surah_id": 78,
+    "background_id": "simon-wilkes-S297j2CsdlM-unsplash.jpg",
+    "video_id": null,
+    "pair_key": "sudais|78",
+    "thumbnail_path": "/home/runner/work/QuranAPIv4/QuranAPIv4/renders/automation/thumbnail.jpg",
+    "reciter_key": "3:murattal",
+    "metadata": {
+      "title": "Surah An-Naba | Abdur-Rahman as-Sudais | Arabic & English Subtitles | سورة النبإ عبد الرحمن السديس",
+      "description": "سورة النبإ بصوت القارئ عبد الرحمن السديس\nالآيات 1–40\n\nSurah An-Naba, recited by Abdur-Rahman as-Sudais\nAyahs 1–40\n\nاستمع إلى تلاوة القرآن الكريم مع النص العربي المتزامن، معاني الكلمات باللغة الإنجليزية، وترجمة معاني القرآن باللغة الإنجليزية.\n\nListen to the Quran with synchronized Arabic text, word-by-word English meanings, and the Saheeh International translation of the meanings.\n\npeaceful Quran recitation with Arabic and English subtitles for reflection, focus, and calm listening.\nbeautiful Quran recitation / quran tilawat relaxing for daily listening, study, and sleep.\n\nاللهم اجعل القرآن ربيع قلوبنا ونور صدورنا وذهاب همومنا.\n\nالقارئ | Reciter: عبد الرحمن السديس | Abdur-Rahman as-Sudais\nالرواية | Recitation/Rewaya: Murattal\nالسورة | Surah: النبإ | An-Naba\nالآيات | Ayahs: 1–40\nالنص العربي | Arabic text: Uthmani script\nالترجمة الإنجليزية | English translation: Saheeh International\n\nمصدر النص العربي والترجمة الإنجليزية وتوقيت الآيات والكلمات: Quran.Foundation Content API\nArabic Quran text, Saheeh International translation, ayah timing, and word timing source: Quran.Foundation Content API\n\nمصدر التلاوة | Audio recitation source: Quran.Foundation Content API\nReciter: Abdur-Rahman as-Sudais\nRecitation/Rewaya: Murattal\nالخلفية مقدمة من صاحب القناة | Background media provided by the channel owner\n\n#Quran #القرآن_الكريم #An_Naba #النبإ #Abdur_Rahman_as_Sudais #عبد_الرحمن_السديس\n#QuranRecitation #PeacefulQuran #BeautifulQuranRecitation #SurahAn_Naba\n\n[quran-video-pair:sudais|78]",
+      "tags": [
+        "An-Naba",
+        "Surah An-Naba",
+        "Surat An-Naba",
+        "النبإ",
+        "سورة النبإ",
+        "Abdur-Rahman as-Sudais",
+        "عبد الرحمن السديس",
+        "as Sudais",
+        "Abdur Rahman",
+        "AbdurRahman asSudais",
+        "Quran",
+        "Quran recitation",
+        "Quran recitation for sleep",
+        "peaceful Quran recitation",
+        "beautiful Quran recitation",
+        "quran tilawat relaxing",
+        "relaxing Quran recitation",
+        "Holy Quran",
+        "القرآن الكريم",
+        "تلاوة القرآن",
+        "full surah",
+        "Quran with English subtitles",
+        "Quran English translation"
+      ],
+      "hashtags": [
+        "#Quran",
+        "#القرآن_الكريم",
+        "#An_Naba",
+        "#النبإ"
+      ],
+      "thumbnail_text_arabic": "سورة النبإ | عبد الرحمن السديس",
+      "thumbnail_text_english": "Surah An-Naba | Abdur-Rahman as-Sudais",
+      "playlist_title": "Abdur-Rahman as-Sudais | عبد الرحمن السديس Quran Recitations",
+      "playlist_description": "Quran recitations by Abdur-Rahman as-Sudais | تلاوات القرآن الكريم بصوت عبد الرحمن السديس"
+    }
+  },
   "last_success_at": "2026-11-07T17:51:13.360084+00:00",
   "last_success": {
     "surah": 111,
