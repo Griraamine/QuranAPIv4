@@ -178,11 +178,11 @@
     "sudais|33",
     "sudais|112",
     "sudais|79",
-    "sudais|68"
+    "sudais|68",
+    "sudais|13"
   ],
   "skipped_reciter_surahs": {},
   "surah_queue": [
-    13,
     105,
     67,
     90,
@@ -258,7 +258,6 @@
     104
   ],
   "background_queue": [
-    "33355.jpg",
     "33357.jpg",
     "yasmine-arfaoui-qbvAboqHkBg-unsplash.jpg",
     "alicia-christin-gerald-_kKU4IUvJAA-unsplash.jpg",
@@ -289,59 +288,13 @@
     "minshawi": "PLGR6DlKSv1rE",
     "rifai": "PLe-r7Q5Q1EWw"
   },
-  "pending_post_upload": {
-    "surah_id": 13,
-    "background_id": "33355.jpg",
-    "video_id": "FJDNjFfkmtE",
-    "pair_key": "sudais|13",
-    "thumbnail_path": "/home/runner/work/QuranAPIv4/QuranAPIv4/renders/automation/thumbnail.jpg",
-    "reciter_key": "3:murattal",
-    "metadata": {
-      "title": "Surah Ar-Ra'd | Abdur-Rahman as-Sudais | Arabic & English Subtitles | سورة الرعد عبد الرحمن السديس",
-      "description": "سورة الرعد بصوت القارئ عبد الرحمن السديس\nالآيات 1–43\n\nSurah Ar-Ra'd, recited by Abdur-Rahman as-Sudais\nAyahs 1–43\n\nاستمع إلى تلاوة القرآن الكريم مع النص العربي المتزامن، معاني الكلمات باللغة الإنجليزية، وترجمة معاني القرآن باللغة الإنجليزية.\n\nListen to the Quran with synchronized Arabic text, word-by-word English meanings, and the Saheeh International translation of the meanings.\n\npeaceful Quran recitation with Arabic and English subtitles for reflection, focus, and calm listening.\nbeautiful Quran recitation / quran tilawat relaxing for daily listening, study, and sleep.\n\nاللهم اجعل القرآن ربيع قلوبنا ونور صدورنا وذهاب همومنا.\n\nالقارئ | Reciter: عبد الرحمن السديس | Abdur-Rahman as-Sudais\nالرواية | Recitation/Rewaya: Murattal\nالسورة | Surah: الرعد | Ar-Ra'd\nالآيات | Ayahs: 1–43\nالنص العربي | Arabic text: Uthmani script\nالترجمة الإنجليزية | English translation: Saheeh International\n\nمصدر النص العربي والترجمة الإنجليزية وتوقيت الآيات والكلمات: Quran.Foundation Content API\nArabic Quran text, Saheeh International translation, ayah timing, and word timing source: Quran.Foundation Content API\n\nمصدر التلاوة | Audio recitation source: Quran.Foundation Content API\nReciter: Abdur-Rahman as-Sudais\nRecitation/Rewaya: Murattal\nالخلفية مقدمة من صاحب القناة | Background media provided by the channel owner\n\n#Quran #القرآن_الكريم #Ar_Ra_d #الرعد #Abdur_Rahman_as_Sudais #عبد_الرحمن_السديس\n#QuranRecitation #PeacefulQuran #BeautifulQuranRecitation #SurahAr_Ra_d\n\n[quran-video-pair:sudais|13]",
-      "tags": [
-        "Ar-Ra'd",
-        "Surah Ar-Ra'd",
-        "Surat Ar-Ra'd",
-        "الرعد",
-        "سورة الرعد",
-        "Abdur-Rahman as-Sudais",
-        "عبد الرحمن السديس",
-        "AbdurRahman asSudais",
-        "as Sudais",
-        "Abdur Rahman",
-        "Quran",
-        "Quran recitation",
-        "Quran recitation for sleep",
-        "peaceful Quran recitation",
-        "beautiful Quran recitation",
-        "quran tilawat relaxing",
-        "relaxing Quran recitation",
-        "Holy Quran",
-        "القرآن الكريم",
-        "تلاوة القرآن",
-        "full surah",
-        "Quran with English subtitles",
-        "Quran English translation"
-      ],
-      "hashtags": [
-        "#Quran",
-        "#القرآن_الكريم",
-        "#Ar_Ra_d",
-        "#الرعد"
-      ],
-      "thumbnail_text_arabic": "سورة الرعد | عبد الرحمن السديس",
-      "thumbnail_text_english": "Surah Ar-Ra'd | Abdur-Rahman as-Sudais",
-      "playlist_title": "Abdur-Rahman as-Sudais | عبد الرحمن السديس Quran Recitations",
-      "playlist_description": "Quran recitations by Abdur-Rahman as-Sudais | تلاوات القرآن الكريم بصوت عبد الرحمن السديس"
-    }
-  },
-  "last_success_at": "2026-11-24T02:51:26.184324+00:00",
+  "pending_post_upload": null,
+  "last_success_at": "2026-11-25T00:08:04.407885+00:00",
   "last_success": {
-    "surah": 68,
+    "surah": 13,
     "reciter": "3:murattal",
-    "video": "https://www.youtube.com/watch?v=xm1rgLVzB3U",
-    "background": "lea-kobal-EJpe9XZwBhU-unsplash.jpg"
+    "video": "https://www.youtube.com/watch?v=FJDNjFfkmtE",
+    "background": "33355.jpg"
   },
   "recent_failures": []
 }
